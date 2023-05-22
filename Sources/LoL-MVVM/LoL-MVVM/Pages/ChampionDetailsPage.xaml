@@ -2,8 +2,44 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LoL_MVVM.Pages.ChampionDetailsPage"
+             xmlns:components="clr-namespace:LoL_MVVM.Components"
              Title="ChampionDetailsPage">
-    <VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+
         <Image Source="dotnet_bot" />
-    </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="1*, 1*, 1*" RowDefinitions="auto, auto, auto" Margin="10,0,0,0"  >
+            
+                <!-- Row 0-->
+                <Label Text="Annie" Grid.Column="0" />
+                <Image Source="dotnet_bot" Grid.Column="2" HorizontalOptions="End" HeightRequest="50" WidthRequest="50" />
+
+                <!-- Row 1 -->
+                <Label Margin="0,10,10,0"
+                       Text="Dangereuse, incroyablement précoce, Annie est une enfant mage dotée d'extraordinaires pouvoirs de pyrokinésie. Même à l'ombre des montagnes du nord de Noxus, sa magie est un cas unique. Son affinité naturelle avec le feu se manifesta dès sa prime enfance à travers des explosions émotionnelles imprévisibles, même si elle apprit rapidement à contrôler ces éclats. Parmi ses jeux favoris, elle aime invoquer son bien-aimé ours en peluche, Tibbers, sous la forme d'un protecteur enflammé. Perdue dans l'innocence perpétuelle de l'enfance, Annie sautille dans les forêts obscures, à la recherche de quelqu'un avec qui jouer."
+                       Grid.Row="1" Grid.ColumnSpan="3" />
+            
+                <!-- Row 3 Caractéristiques-->
+                <VerticalStackLayout Margin="0,10,0,0"  Grid.Row="2" Grid.ColumnSpan="3">
+                    <Label Text="Caractéristiques"
+                           FontSize="24"/>
+
+                    <HorizontalStackLayout>
+                        <Border BackgroundColor="Transparent" 
+                                Stroke="black"
+                                HeightRequest="100" WidthRequest="100">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="Vie" />
+                                <Label Text="560" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <components:CaracteristicItemView />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
