@@ -34,7 +34,8 @@
                                 <Label Text="560" />
                             </VerticalStackLayout>
                         </Border>
-                        <components:CaracteristicItemView />
+                        <components:CaracteristicItemView CaracteristicName="Vie" CaracteristicValue="560" />
+                        <components:CaracteristicItemView CaracteristicName="Armure" CaracteristicValue="19" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
 
