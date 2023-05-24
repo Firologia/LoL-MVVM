@@ -46,7 +46,7 @@
 
 		<!-- Icons -->
 		<MauiImage Include="Resources\Icons\*" />
-		<MauiImage Update="Resources\Icons\*" BaseSize="32,32"/>
+		<MauiImage Update="Resources\Icons\*" BaseSize="32,32" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -56,12 +56,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="NewFolder\**" />
-	  <Compile Remove="NewFolder\**" />
-	  <EmbeddedResource Remove="NewFolder\**" />
-	  <MauiCss Remove="NewFolder\**" />
-	  <MauiXaml Remove="NewFolder\**" />
-	  <None Remove="NewFolder\**" />
 	  <None Remove="Resources\Icons\" />
 	  <None Remove="Resources\Icons\icon_league_of_legends.svg" />
 	  <None Remove="Resources\Icons\icon_sword.png" />

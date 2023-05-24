@@ -6,16 +6,16 @@
              Title="ChampionListPage">
 
 
-    <ScrollView>
+    <VerticalStackLayout>
 
         <ListView ItemsSource="{Binding Champions}"
-                  Margin="5,10,0,0"
+                  Margin="5,10,0,0" HeightRequest="500"
                   >
             <ListView.ItemTemplate>
-                
-                <DataTemplate>
+
+                <DataTemplate >
                     <ViewCell>
-                        <components:ChampionItemView />
+                        <components:ChampionItemView/>
                     </ViewCell>
                 </DataTemplate>
 
@@ -23,5 +23,5 @@
         </ListView>
         
         
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
