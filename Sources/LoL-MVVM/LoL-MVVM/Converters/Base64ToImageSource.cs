@@ -4,8 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bumptech.Glide.Load.Resource.Bitmap;
-using Kotlin.Contracts;
 
 namespace LoL_MVVM.Converters
 {
