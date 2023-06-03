@@ -1,22 +1,25 @@
 using System.Collections.ObjectModel;
-using Model;
+using ViewModel;
 
 namespace LoL_MVVM.Pages;
 
 public partial class ChampionListPage : ContentPage
 {
-    public ObservableCollection<Champion> Champions { get; set; } = ( (App) Application.Current ).Champions;
+    public ObservableCollection<ChampionVM> Champions { get; set; } = ( (App) Application.Current ).ChampionsVM;
 
-    public ObservableCollection<int> Items { get; set; } = new ObservableCollection<int>();
 
 	public ChampionListPage()
 	{
-		Items.Add(0);
-        Items.Add(0);
-        Items.Add(0);
-        Items.Add(0);
-        Items.Add(0);
         InitializeComponent();
         BindingContext = this;
 	}
+
+    async void ListView_ItemTapped(System.Object sender, Microsoft.Maui.Controls.ItemTappedEventArgs e)
+    {
+        if(e.Item is ChampionVM championVM)
+        {
+            await Navigation.PushAsync(new ChampionDetailsPage(championVM));
+        }
+        
+    }
 }

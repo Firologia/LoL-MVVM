@@ -68,6 +68,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\StubLib\StubLib.csproj" />
+	  <ProjectReference Include="..\ViewModel\ViewModel.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

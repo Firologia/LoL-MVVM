@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LoL_MVVM.Pages.ChampionListPage"
@@ -8,7 +8,7 @@
 
     <VerticalStackLayout>
 
-        <ListView ItemsSource="{Binding Champions}"
+        <ListView ItemsSource="{Binding Champions}" ItemTapped="ListView_ItemTapped" SelectionMode="None"
                   Margin="5,10,0,0" HeightRequest="500"
                   >
             <ListView.ItemTemplate>

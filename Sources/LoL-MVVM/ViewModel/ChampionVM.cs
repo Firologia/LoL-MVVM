@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Model;
+using ViewModel.Utils;
 
 namespace ViewModel
 {
@@ -51,20 +52,19 @@ namespace ViewModel
                 OnPropertyChanged();
             }
         }
-        public Dictionary<string, int> Characteristics
-        {
-            get;
-            set;
-
-        } = new();
+        public ObservableDictionary<string, int> Characteristics { get; private init; }
+        private ObservableDictionary<string, int> _characteristics = new();
 
         public ChampionVM(Champion model)
         {
             _model = model;
             foreach (var characteristic in _model.Characteristics)
             {
-                Characteristics.Add(characteristic.Key, characteristic.Value);
+                _characteristics.Add(characteristic.Key, characteristic.Value);
             }
+
+            Characteristics = new(_characteristics);
+
         }
 
 

@@ -1,9 +1,16 @@
+using ViewModel;
+
 namespace LoL_MVVM.Pages;
 
 public partial class ChampionDetailsPage : ContentPage
 {
-	public ChampionDetailsPage()
+	public ChampionVM ChampionVM { get; set; }
+
+	public ChampionDetailsPage(ChampionVM championVM)
 	{
-		InitializeComponent();
+		ChampionVM = championVM;
+        InitializeComponent();
+		BindingContext = ChampionVM;
+
 	}
 }
