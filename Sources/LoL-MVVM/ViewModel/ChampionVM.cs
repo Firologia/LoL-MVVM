@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Model;
 using ViewModel.Utils;
@@ -52,9 +53,22 @@ namespace ViewModel
                 OnPropertyChanged();
             }
         }
+        
+        public string LargeImage
+        {
+            get => _model.Image.Base64;
+            set
+            {
+                if (_model.Image.Base64.Equals(value)) return;
+                _model.Image.Base64 = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableDictionary<string, int> Characteristics { get; private init; }
         private ObservableDictionary<string, int> _characteristics = new();
 
+        public ReadOnlyObservableCollection<SkillVM> Skills { get; private init; }
+        public ObservableCollection<SkillVM> _skills = new();
         public ChampionVM(Champion model)
         {
             _model = model;
@@ -65,20 +79,21 @@ namespace ViewModel
 
             Characteristics = new(_characteristics);
 
+            foreach (var skill in _model.Skills)
+            {
+                _skills.Add(new SkillVM(skill));
+            }
+
+            Skills = new(_skills);
+
+
+
         }
 
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
         }
     }
 }
