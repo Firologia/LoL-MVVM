@@ -18,7 +18,7 @@
 
         <Image Source="{Binding LargeImage, Converter={StaticResource Base64ToImageSource}}" />
 
-            <Grid ColumnDefinitions="1*, 1*, 1*" RowDefinitions="auto, auto, auto, auto" Margin="10,0,0,0"  >
+            <Grid ColumnDefinitions="1*, 1*, 1*" RowDefinitions="auto, auto, auto, auto, auto" Margin="10,0,0,0"  >
             
                 <!-- Row 0-->
                 <Label Text="{Binding Name}" Grid.Column="0" FontSize="24" />
@@ -49,13 +49,25 @@
 
                 <Label Text="Compétences" Grid.Row="3" Margin="0,10,0,0" FontSize="24"/>
 
-                <CollectionView ItemsSource="{Binding Skills}" Grid.Row="3" Grid.ColumnSpan="4" Margin="0,50,0,0">
+                <CollectionView ItemsSource="{Binding Skills}" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,50,0,0">
                     <CollectionView.ItemTemplate >
                         <DataTemplate>
                             <components:SkillItemView />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
+                <Label Text="Skins" Grid.Row="4" Margin="0,10,0,0" FontSize="24" />
+
+                <!--
+                <CollectionView Grid.Row="4" Grid.ColumnSpan="3" >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                -->
 
             </Grid>
 
