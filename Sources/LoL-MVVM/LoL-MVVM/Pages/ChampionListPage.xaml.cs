@@ -5,13 +5,14 @@ namespace LoL_MVVM.Pages;
 
 public partial class ChampionListPage : ContentPage
 {
-    public ObservableCollection<ChampionVM> Champions { get; set; } = ( (App) Application.Current ).ChampionsVM;
 
+    private ChampionsManagerVM championsManagerVm;
 
-	public ChampionListPage()
-	{
+	public ChampionListPage(ChampionsManagerVM championsManagerVm)
+    {
+        this.championsManagerVm = championsManagerVm;
         InitializeComponent();
-        BindingContext = this;
+        BindingContext = this.championsManagerVm;
 	}
 
     async void ListView_ItemTapped(System.Object sender, Microsoft.Maui.Controls.ItemTappedEventArgs e)

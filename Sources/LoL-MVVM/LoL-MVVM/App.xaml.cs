@@ -9,9 +9,6 @@ namespace LoL_MVVM;
 public partial class App : Application
 {
 
-    public ObservableCollection<ChampionVM> ChampionsVM { get; set; } =
-        new StubData().ChampionsMgr.GetItems(0, 5).Result.Select(x => new ChampionVM(x)).ToObservableCollection();
-
     public App()
 	{
 		InitializeComponent();

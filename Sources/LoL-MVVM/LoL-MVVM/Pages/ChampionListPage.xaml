@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LoL_MVVM.Pages.ChampionListPage"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
-             Title="ChampionListPage">
+             xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             Title="ChampionListPage"
+             x:DataType="viewmodel:ChampionsManagerVM">
 
 
     <VerticalStackLayout>

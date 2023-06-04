@@ -10,24 +10,24 @@ using Model;
 namespace ViewModel;
 public class SkillVM : INotifyPropertyChanged
     {
-        private Skill _model;
-        public string Name => _model.Name;
+        private Skill model;
+        public string Name => model.Name;
 
         public string Description
         {
-            get => _model.Description;
+            get => model.Description;
             set
             {
-                if(_model.Description.Equals(value)) return;
-                _model.Description = value;
+                if(model.Description.Equals(value)) return;
+                model.Description = value;
                 OnPropertyChanged();
             }
         }
-        public string Type => _model.Type.ToString();
+        public string Type => model.Type.ToString();
 
         public SkillVM(Model.Skill model)
         {
-            _model = model;
+            this.model = model;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

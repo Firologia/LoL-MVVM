@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Maui;
+using LoL_MVVM.Pages;
 using Microsoft.Extensions.Logging;
+using Model;
+using StubLib;
+using ViewModel;
 
 namespace LoL_MVVM;
 
@@ -15,7 +19,10 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+			})
+			.Services.AddSingleton<IDataManager, StubData>()
+			.AddSingleton<ChampionsManagerVM>()
+            .AddScoped<ChampionListPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
