@@ -6,10 +6,21 @@
     xmlns:local="clr-namespace:LoL_MVVM"
     xmlns:pages="clr-namespace:LoL_MVVM.Pages"
     Shell.FlyoutBehavior="Disabled">
+    
+    <TabBar>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate pages:ChampionDetailsPage}"
-        Route="ChampionsDetailsPage" />
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate pages:HomePage}"
+            Icon="icon_league_of_legends.png"
+            />
+
+        <ShellContent
+            Title="Champions"
+            ContentTemplate="{DataTemplate pages:ChampionListPage}"
+            Icon="icon_sword.png"
+            />
+
+    </TabBar>
 
 </Shell>
