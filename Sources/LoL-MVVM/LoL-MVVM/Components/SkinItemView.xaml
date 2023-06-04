@@ -2,14 +2,23 @@
 
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LoL_MVVM.Components.SkinItemView">
+             xmlns:viewmodel ="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:converters="clr-namespace:LoL_MVVM.Converters"
+             x:Class="LoL_MVVM.Components.SkinItemView"
+             x:DataType="viewmodel:SkinVM">
 
-    <Border>
+    <ContentView.Resources>
+        <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
+    </ContentView.Resources>
 
-        <HorizontalStackLayout>
+    <Border BackgroundColor="Transparent">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="0,10,10,10" />
+        </Border.StrokeShape>
+        <HorizontalStackLayout Margin="10,5,0,5">
 
-            <Image Source="dotnet_bot.png" HeightRequest="50" WidthRequest="50" />
-            <Label Text="{Binding Name}" VerticalTextAlignment="Center"/>
+            <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" HeightRequest="50" WidthRequest="50" />
+            <Label Text="{Binding Name}" VerticalTextAlignment="Center" Margin="10,0,0,0" TextColor="{StaticResource Primary}"/>
 
         </HorizontalStackLayout>
 

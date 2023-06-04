@@ -69,6 +69,10 @@ namespace ViewModel
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private init; }
         public ObservableCollection<SkillVM> _skills = new();
+
+        public ReadOnlyObservableCollection<SkinVM> Skins { get; private init; }
+        public ObservableCollection<SkinVM> _skins = new();
+
         public ChampionVM(Champion model)
         {
             _model = model;
@@ -85,6 +89,13 @@ namespace ViewModel
             }
 
             Skills = new(_skills);
+
+            foreach (var skin in _model.Skins)
+            {
+                _skins.Add(new SkinVM(skin));
+            }
+
+            Skins = new(_skins);
 
 
 
