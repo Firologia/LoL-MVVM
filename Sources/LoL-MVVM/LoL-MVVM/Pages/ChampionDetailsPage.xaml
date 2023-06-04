@@ -30,8 +30,8 @@
             
                 <!-- Row 0-->
                 <Label Text="{Binding Name}" Grid.Column="0" Style="{StaticResource CategoryTitle}" />
-                <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" Margin="0,0,10,0">
-                    <Image Source="{Binding Class, Converter={StaticResource ClassIconConverter}}"  HorizontalOptions="End" HeightRequest="30" WidthRequest="30" />
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Image Source="{Binding Class, Converter={StaticResource ClassIconConverter}}" HeightRequest="30" WidthRequest="30" />
                     <Label Text="{Binding Class}" />
                 </VerticalStackLayout>
 
