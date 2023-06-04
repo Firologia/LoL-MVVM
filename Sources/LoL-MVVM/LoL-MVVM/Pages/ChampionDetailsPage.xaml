@@ -11,17 +11,26 @@
     <ContentPage.Resources>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
         <converters:ClassIconConverter x:Key="ClassIconConverter" />
+
+        <Style x:Key="CategoryTitle" TargetType="{x:Type Label}" >
+            <Setter Property="TextColor" Value="#b29d65" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="TextColor" Value="#b29d65" />
+        </Style>
     </ContentPage.Resources>
     <ScrollView Background="Black">
         <VerticalStackLayout>
 
-        <Image Source="{Binding LargeImage, Converter={StaticResource Base64ToImageSource}}" />
+        <Image Source="{Binding LargeImage, Converter={StaticResource Base64ToImageSource}}" Margin="0,0,0,10" />
 
             <Grid ColumnDefinitions="1*, 1*, 1*" RowDefinitions="auto, auto, auto, auto, auto" Margin="10,0,0,0"  >
             
                 <!-- Row 0-->
-                <Label Text="{Binding Name}" Grid.Column="0" FontSize="24" />
-                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                <Label Text="{Binding Name}" Grid.Column="0" Style="{StaticResource CategoryTitle}" />
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="End" Margin="0,0,10,0">
                     <Image Source="{Binding Class, Converter={StaticResource ClassIconConverter}}"  HorizontalOptions="End" HeightRequest="30" WidthRequest="30" />
                     <Label Text="{Binding Class}" />
                 </VerticalStackLayout>
@@ -32,7 +41,7 @@
                        Text="{Binding Bio}"
                        Grid.Row="1" Grid.ColumnSpan="3" />
 
-                <Label Text="Caractéristiques" Grid.Row="2" Margin="0,10,0,0"/>
+                <Label Text="Caractéristiques" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,10,0,0"  Style="{StaticResource CategoryTitle}"/>
                     <!-- Row 3 Caractéristiques-->
                 <!--
 
@@ -46,7 +55,7 @@
 
                 -->
 
-                <Label Text="Compétences" Grid.Row="3" Margin="0,10,0,0" FontSize="24"/>
+                <Label Text="Compétences" Grid.Row="3" Margin="0,10,0,0" Style="{StaticResource CategoryTitle}"/>
 
                 <CollectionView ItemsSource="{Binding Skills}" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,50,0,0">
                     <CollectionView.ItemTemplate >
@@ -56,7 +65,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-                <Label Text="Skins" Grid.Row="4" Margin="0,30,0,0" FontSize="24" />
+                <Label Text="Skins" Grid.Row="4" Margin="0,30,0,0" Style="{StaticResource CategoryTitle}" />
 
                 <CollectionView ItemsSource="{Binding Skins}" Grid.Row="4" Grid.ColumnSpan="3"  Margin="0,80,0,0" >
                     <CollectionView.ItemTemplate>

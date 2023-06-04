@@ -11,14 +11,14 @@
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
     </ContentView.Resources>
 
-    <Border>
+    <Border BackgroundColor="Transparent">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="0,10,10,10" />
         </Border.StrokeShape>
         <HorizontalStackLayout Margin="10,5,0,5">
 
             <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" HeightRequest="50" WidthRequest="50" />
-            <Label Text="{Binding Name}" VerticalTextAlignment="Center" Margin="10,0,0,0"/>
+            <Label Text="{Binding Name}" VerticalTextAlignment="Center" Margin="10,0,0,0" TextColor="{StaticResource Primary}"/>
 
         </HorizontalStackLayout>
 
