@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:converters="clr-namespace:LoL_MVVM.Converters"
+             x:Class="LoL_MVVM.Pages.ChampionEditPage"
+             Title="ChampionEditPage"
+             x:DataType="viewmodel:ChampionVM">
+
+    <ContentPage.Resources>
+        <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
+        <Style x:Key="PageTitle" TargetType="{x:Type Label}" >
+            <Setter Property="TextColor" Value="#b29d65" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="TextColor" Value="#b29d65" />
+        </Style>
+    </ContentPage.Resources>
+    <VerticalStackLayout BackgroundColor="Black">
+        <Label 
+            Text="Modifier le champion"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" Style="{StaticResource PageTitle}" />
+        <Border HeightRequest="2" Margin="100,0" />
+        <ScrollView Margin="0,5,0,0">
+            <VerticalStackLayout>
+                <Grid ColumnDefinitions="1*,4*" RowDefinitions="auto,auto,auto,auto" RowSpacing="20">
+
+                    <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                    Grid.Row="0" Grid.Column="0"/>
+
+                    <Border  Grid.Row="0" Grid.Column="1" Margin="0,0,5,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Editor Text="{Binding Name}" 
+                                IsReadOnly="True" BackgroundColor="#efe7b7"  />
+                    </Border>
+
+                    <Label Text="Icone :" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
+                        <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" />
+                    </Border>
+
+                    <Label Text="Image :" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start" BackgroundColor="#efe7b7">
+                        <Image Source="{Binding LargeImage, Converter={StaticResource Base64ToImageSource}}" />
+                    </Border>
+
+                    <Label Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Border  Grid.Row="3" Grid.Column="1" Margin="0,0,5,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5"/>
+                        </Border.StrokeShape>
+                        <Editor Text="{Binding Bio}" BackgroundColor="#efe7b7" />
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </VerticalStackLayout>
+
+</ContentPage>

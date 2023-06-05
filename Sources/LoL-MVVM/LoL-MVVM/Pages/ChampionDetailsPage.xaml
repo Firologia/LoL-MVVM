@@ -21,6 +21,11 @@
             <Setter Property="TextColor" Value="#b29d65" />
         </Style>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Modifier" Clicked="Edit_Champion" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView Background="Black">
         <VerticalStackLayout>
 
