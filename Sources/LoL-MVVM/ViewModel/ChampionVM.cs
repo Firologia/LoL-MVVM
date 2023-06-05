@@ -40,6 +40,7 @@ namespace ViewModel
                 {
                     _model.Class = ChampionClass.Unknown;
                 }
+                OnPropertyChanged();
             }
         }
 

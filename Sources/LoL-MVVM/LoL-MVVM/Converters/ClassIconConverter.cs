@@ -15,6 +15,8 @@ namespace LoL_MVVM.Converters
 
             switch (value)
             {
+                case "Assassin" :
+                    return "role_icon_assassin.png";
                 case "Fighter":
                     return "role_icon_fighter.png";
                 case "Mage":
