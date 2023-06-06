@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Custom_Toolkit_MVVM;
 using Model;
+using ViewModel.Enums;
 using ViewModel.Utils;
 
 namespace ViewModel
@@ -20,20 +21,13 @@ namespace ViewModel
 
         }
 
-        public string Class
+        public ChampionClassVM Class
         {
-            get => model.Class.ToString();
-            set => SetModelPropertyChanged(model.Class.ToString(), value, EqualityComparer<string>.Default, model,
+            get => (ChampionClassVM) Enum.Parse<ChampionClassVM>(model.Class.ToString());
+            set => SetModelPropertyChanged(model.Class, Enum.Parse<ChampionClass>(value.ToString()), EqualityComparer<ChampionClass>.Default, model,
                     (model, value) =>
                     {
-                        try
-                        {
-                            model.Class = (ChampionClass)Enum.Parse(typeof(ChampionClass), value);
-                        }
-                        catch(Exception)
-                        {
-                            model.Class = ChampionClass.Unknown;
-                        }
+                        model.Class = value;
                     });
         }
 
@@ -41,7 +35,7 @@ namespace ViewModel
         {
             get => model.Icon;
             set => SetModelPropertyChanged(model.Icon, value, EqualityComparer<string>.Default, model,
-                    (model, value) => { model.Icon = value!; });
+                    (model, value) => { model.Icon = value; });
         }
 
         public string LargeImage

@@ -32,7 +32,7 @@ namespace Custom_Toolkit_MVVM
         /// <param name="newValue">Value to set</param>
         /// <param name="comparer">The comparer used to compare the values</param>
         /// <param name="model">The object (model) which contains the property</param>
-        /// <param name="callback"></param>
+        /// <param name="callback">The callback we use to assign the value to the property in the model</param>
         /// <param name="propertyName">The name of the property</param>
         /// <returns></returns>
         protected bool SetModelPropertyChanged<TModel, T>(T oldValue, T newValue, IEqualityComparer<T> comparer, TModel model, Action<TModel, T> callback, [CallerMemberName] string? propertyName = null)

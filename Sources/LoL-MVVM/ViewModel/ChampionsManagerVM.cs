@@ -7,7 +7,7 @@ public class ChampionsManagerVM
 {
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
 
-    private ObservableCollection<ChampionVM> champions = new();
+    private readonly ObservableCollection<ChampionVM> champions = new();
 
     private readonly IDataManager dataManager;
 
@@ -17,8 +17,8 @@ public class ChampionsManagerVM
         LoadChampions();
         Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
         
-    }
 
+    }
     private void LoadChampions()
     {
         foreach (var champion in dataManager.ChampionsMgr.GetItems(0, 10).Result)

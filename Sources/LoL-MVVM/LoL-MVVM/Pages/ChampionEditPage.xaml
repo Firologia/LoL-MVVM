@@ -3,11 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:LoL_MVVM.Converters"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
+             xmlns:utils="clr-namespace:ViewModel.Utils;assembly=ViewModel"
+             xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
              Title="ChampionEditPage"
              >
 
     <ContentPage.Resources>
+        <utils:EnumsUtil x:TypeArguments="enums:ChampionClassVM" x:Key="championClass"/>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
 
         <Style x:Key="PageTitle" TargetType="{x:Type Label}" >
@@ -65,7 +68,7 @@
 
                 <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
-                <CollectionView Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Classes}" x:Name="ClassesCollectionView" SelectionMode="Single">
+                <CollectionView Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Values, Source={StaticResource championClass}}" x:Name="ClassesCollectionView" SelectionMode="Single">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                                          Span="2"/>
