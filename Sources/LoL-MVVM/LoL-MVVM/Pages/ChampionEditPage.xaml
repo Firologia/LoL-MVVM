@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
              xmlns:converters="clr-namespace:LoL_MVVM.Converters"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
              Title="ChampionEditPage"
-             x:DataType="viewmodel:ChampionVM">
+             >
 
     <ContentPage.Resources>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
@@ -43,18 +41,18 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5"/>
                     </Border.StrokeShape>
-                    <Editor Text="{Binding Name}" 
+                    <Editor Text="{Binding ChampionVM.Name}" 
                             IsReadOnly="true" BackgroundColor="#efe7b7"  />
                 </Border>
 
                 <Label Text="Icone :" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
-                    <Image Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" />
+                    <Image Source="{Binding ChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" HeightRequest="50" WidthRequest="50" />
                 </Border>
 
                 <Label Text="Image :" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start" BackgroundColor="#efe7b7">
-                    <Image Source="{Binding LargeImage, Converter={StaticResource Base64ToImageSource}}" />
+                    <Image Source="{Binding ChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" HeightRequest="150" WidthRequest="300" />
                 </Border>
 
                 <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
@@ -62,37 +60,42 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5"/>
                     </Border.StrokeShape>
-                <Editor x:Name="BioEditor" Text="{Binding Bio}" BackgroundColor="#efe7b7" />
+                <Editor x:Name="BioEditor" Text="{Binding ChampionVM.Bio}" BackgroundColor="#efe7b7" />
                 </Border>
 
                 <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <CollectionView Grid.Row="4" Grid.Column="1" x:Name="ClassesCollectionView" SelectionMode="Single">
+                
+                <CollectionView Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Classes}" x:Name="ClassesCollectionView" SelectionMode="Single">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                                          Span="2"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border BackgroundColor="#efe7b7" HeightRequest="100" WidthRequest="100">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="40,40,0,40"/>
-                                </Border.StrokeShape>
-                                <components:ChampionClassItemVIew/>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup Name="CommonStates">
-                                        <VisualState Name="Normal"></VisualState>
-                                        <VisualState Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
+                                <Border BackgroundColor="#efe7b7" HeightRequest="100" WidthRequest="100">
 
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                            </Border>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="40,40,0,40"/>
+                                    </Border.StrokeShape>
+
+                                    <components:ChampionClassItemView/>
+
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal"></VisualState>
+                                            <VisualState Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+
+                                </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+               
             </Grid>
 
         </ScrollView>

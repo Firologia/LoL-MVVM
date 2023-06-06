@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             x:Class="LoL_MVVM.Components.ChampionClassItemView"
+             x:DataType="viewmodel:ChampionClassVM">
+
+
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+            <Image Source="{Binding ImagePath}" HeightRequest="40" WidthRequest="40">
+                <Image.Behaviors>
+                    <toolkit:IconTintColorBehavior TintColor="Black" />
+                </Image.Behaviors>
+            </Image>
+            <Label Text="{Binding Name}" TextColor="Black" />
+        </VerticalStackLayout>
+
+</ContentView>

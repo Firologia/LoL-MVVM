@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\Custom-Toolkit-MVVM\Custom-Toolkit-MVVM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

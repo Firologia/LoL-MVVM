@@ -78,7 +78,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Components\ChampionClassItemVIew.xaml">
+	  <MauiXaml Update="Components\ChampionClassItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Components\ChampionItemView.xaml">
