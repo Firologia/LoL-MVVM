@@ -5,12 +5,14 @@
              xmlns:components="clr-namespace:LoL_MVVM.Components"
              xmlns:utils="clr-namespace:ViewModel.Utils;assembly=ViewModel"
              xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
+             xmlns:converters1="clr-namespace:LoL_MVVM.Converters;assembly=ViewModel"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
              Title="ChampionEditPage"
              >
 
     <ContentPage.Resources>
-        <utils:EnumsUtil x:TypeArguments="enums:ChampionClassVM" x:Key="championClass"/>
+        <converters1:EnumToValuesConverter  x:Key="EnumToValuesConverter"
+                                            x:TypeArguments="enums:ChampionClassVM"/>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
 
         <Style x:Key="PageTitle" TargetType="{x:Type Label}" >
@@ -50,12 +52,12 @@
 
                 <Label Text="Icone :" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
-                    <Image Source="{Binding ChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" HeightRequest="50" WidthRequest="50" />
+                    <ImageButton Source="{Binding ChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" Clicked="Icon_Button_Clicked" HeightRequest="50" WidthRequest="50" />
                 </Border>
 
                 <Label Text="Image :" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start" BackgroundColor="#efe7b7">
-                    <Image Source="{Binding ChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" HeightRequest="150" WidthRequest="300" />
+                    <ImageButton Source="{Binding ChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" Clicked="Image_Button_OnClicked" HeightRequest="150" WidthRequest="300" />
                 </Border>
 
                 <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
@@ -68,7 +70,9 @@
 
                 <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
-                <CollectionView Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Values, Source={StaticResource championClass}}" x:Name="ClassesCollectionView" SelectionMode="Single">
+                <CollectionView Grid.Row="4" Grid.Column="1"
+                                ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}"
+                                x:Name="ClassesCollectionView" SelectedItem="{Binding ChampionVM.Class}" SelectionMode="Single">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                                          Span="2"/>

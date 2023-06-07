@@ -15,6 +15,12 @@
     <Reference Include="Microsoft.Maui.Controls">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.android\7.0.86\ref\net7.0-android30.0\Microsoft.Maui.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Maui.Essentials">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Maui.Essentials.Ref.ios\7.0.86\ref\net7.0-ios13.6\Microsoft.Maui.Essentials.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.Android.Ref.33\33.0.46\ref\net7.0\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

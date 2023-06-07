@@ -77,8 +77,13 @@ namespace ViewModel
 
             Skins = new(_skins);
 
+        }
 
-
+        public ChampionVM() : base(new Champion("", ChampionClass.Unknown))
+        {
+            Characteristics = new(_characteristics);
+            Skills = new(_skills);
+            Skins = new(_skins);
         }
     }
 }

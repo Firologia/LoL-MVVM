@@ -13,8 +13,8 @@ namespace LoL_MVVM.Converters
         {
             if (value is not string) return false;
 
-            byte[] imageBytes = System.Convert.FromBase64String(value as string);
-            ImageSource image = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+            var imageBytes = System.Convert.FromBase64String(value as string);
+            var image = ImageSource.FromStream(() => new MemoryStream(imageBytes));
             
             return image;
         }
