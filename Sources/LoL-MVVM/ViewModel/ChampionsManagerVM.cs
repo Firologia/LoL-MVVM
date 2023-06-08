@@ -21,6 +21,7 @@ public class ChampionsManagerVM
     }
     private void LoadChampions()
     {
+        champions.Clear();
         foreach (var champion in dataManager.ChampionsMgr.GetItems(0, 10).Result)
         {
             champions.Add(new ChampionVM(champion!));

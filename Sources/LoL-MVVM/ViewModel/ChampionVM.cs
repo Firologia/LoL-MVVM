@@ -45,8 +45,7 @@ namespace ViewModel
                 (model, value) => { model.Image.Base64 = value!; });
 
         }
-        public ObservableDictionary<string, int> Characteristics { get; private init; }
-        private ObservableDictionary<string, int> _characteristics = new();
+        public ObservableDictionary<string, int> _characteristics { get; set; } = new ObservableDictionary<string,int>();
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private init; }
         public ObservableCollection<SkillVM> _skills = new();
@@ -56,32 +55,33 @@ namespace ViewModel
 
         public ChampionVM(Champion model) : base(model)
         {
+            Skills = new(_skills);
+            Skins = new(_skins);
+
             foreach (var characteristic in model.Characteristics)
             {
                 _characteristics.Add(characteristic.Key, characteristic.Value);
             }
-
-            Characteristics = new(_characteristics);
 
             foreach (var skill in model.Skills)
             {
                 _skills.Add(new SkillVM(skill));
             }
 
-            Skills = new(_skills);
+            
 
             foreach (var skin in model.Skins)
             {
                 _skins.Add(new SkinVM(skin));
             }
 
-            Skins = new(_skins);
+            
 
         }
 
         public ChampionVM() : base(new Champion("", ChampionClass.Unknown))
         {
-            Characteristics = new(_characteristics);
+            //Characteristics = new(_characteristics);
             Skills = new(_skills);
             Skins = new(_skins);
         }

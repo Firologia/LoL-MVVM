@@ -3,7 +3,7 @@ using System.Globalization;
 using LoL_MVVM.Converters;
 using ViewModel;
 using ViewModel.Enums;
-using ViewModel.Utils;
+using LoL_MVVM.Utils;
 
 namespace LoL_MVVM.Pages;
 
@@ -46,7 +46,7 @@ public partial class ChampionEditPage : ContentPage
 
             return result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // The user canceled or something went wrong
         }

@@ -13,10 +13,17 @@ namespace LoL_MVVM.Converters
         {
             if (value is not string) return false;
 
-            var imageBytes = System.Convert.FromBase64String(value as string);
-            var image = ImageSource.FromStream(() => new MemoryStream(imageBytes));
-            
-            return image;
+            try
+            {
+                var imageBytes = System.Convert.FromBase64String(value as string);
+                var image = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+
+                return image;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

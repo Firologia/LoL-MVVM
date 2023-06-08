@@ -5,13 +5,12 @@
              xmlns:components="clr-namespace:LoL_MVVM.Components"
              xmlns:utils="clr-namespace:ViewModel.Utils;assembly=ViewModel"
              xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
-             xmlns:converters1="clr-namespace:LoL_MVVM.Converters;assembly=ViewModel"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
              Title="ChampionEditPage"
              >
 
     <ContentPage.Resources>
-        <converters1:EnumToValuesConverter  x:Key="EnumToValuesConverter"
+        <converters:EnumToValuesConverter  x:Key="EnumToValuesConverter"
                                             x:TypeArguments="enums:ChampionClassVM"/>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
 
