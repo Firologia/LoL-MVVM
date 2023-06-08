@@ -4,14 +4,19 @@
              x:Class="LoL_MVVM.Pages.ChampionListPage"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
              xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="ChampionListPage"
              x:DataType="viewmodel:ChampionsManagerVM">
 
+    <ContentPage.Behaviors>
+        <!-- Call the load command at the end of loading of this page -->
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadCommand}"/>
+    </ContentPage.Behaviors>
 
     <VerticalStackLayout>
 
         <ListView ItemsSource="{Binding Champions}" ItemTapped="ListView_ItemTapped" SelectionMode="None"
-                  Margin="5,10,0,0" HeightRequest="500"
+                  Margin="5,10,0,0" HeightRequest="500"  
                   >
             <ListView.ItemTemplate>
 
@@ -23,7 +28,19 @@
 
             </ListView.ItemTemplate>
         </ListView>
-        
+        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+            <Button Text="&lt;" Command="{Binding PreviousPageCommand}">
+            </Button>
+            <Label VerticalTextAlignment="Center">
+                <Label.Text>
+                    <MultiBinding StringFormat="Page {0} / {1}">
+                        <Binding Path="Page"/>
+                        <Binding Path="TotalPages"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+            <Button Text="&gt;" Command="{Binding NextPageCommand}" />
+        </HorizontalStackLayout>
         
     </VerticalStackLayout>
 </ContentPage>

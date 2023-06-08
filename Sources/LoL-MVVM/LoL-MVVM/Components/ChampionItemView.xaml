@@ -8,26 +8,30 @@
     <ContentView.Resources>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
     </ContentView.Resources>
+    <SwipeView >
+        <SwipeView.RightItems>
+            <SwipeItem Text="Delete" BackgroundColor="Red" />
+            <SwipeItem Text="Modifier" BackgroundColor="{StaticResource Gray400}"/>
+        </SwipeView.RightItems>
+        
+        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="5"
+              RowDefinitions="1*,1*,1*">
+            <Image Grid.RowSpan="2" 
+                   Aspect="AspectFill" 
+                   HeightRequest="40" 
+                   WidthRequest="40"
+                   Margin="2"
+                   Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" />
 
-    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="5"
-          RowDefinitions="1*,1*"
-    >
-        <Image Grid.RowSpan="2" 
-               Aspect="AspectFill" 
-               HeightRequest="40" 
-               WidthRequest="40"
-               Margin="2"
-               Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" />
-
-        <Label Text="{Binding Name}"
-               Grid.Column="1" 
-               FontSize="16" />
-        <Label Text="{Binding Class }"
-               Grid.Row="1" 
-               Grid.Column="1" 
-               FontSize="12"
-               VerticalOptions="End" />
-
-    </Grid>
+            <Label Text="{Binding Name}"
+                   Grid.Column="1" 
+                   FontSize="16" />
+            <Label Text="{Binding Class }"
+                   Grid.Row="1" 
+                   Grid.Column="1" 
+                   FontSize="12"
+                   VerticalOptions="End" />
+        </Grid>
+    </SwipeView>
 
 </ContentView>

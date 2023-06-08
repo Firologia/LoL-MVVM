@@ -9,8 +9,8 @@
                                 Stroke="#937341"
                                 HeightRequest="100" WidthRequest="100">
         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <Label Text="{Binding CharacteristicName, Source={x:Reference View}}" />
-            <Label Text="{Binding CharacteristicValue, Source={x:Reference View}}" />
+            <Label Text="{Binding CharacteristicName, Source={x:Reference View}}" HorizontalTextAlignment="Center" />
+            <Label Text="{Binding CharacteristicValue, Source={x:Reference View}}" HorizontalOptions="Center" />
         </VerticalStackLayout>
     </Border>
 </ContentView>
