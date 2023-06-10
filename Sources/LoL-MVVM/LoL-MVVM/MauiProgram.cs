@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using LoL_MVVM.Pages;
+using LoL_MVVM.ViewModel;
 using Microsoft.Extensions.Logging;
 using Model;
 using StubLib;
@@ -22,7 +23,8 @@ public static class MauiProgram
 			})
 			.Services.AddSingleton<IDataManager, StubData>()
 			.AddSingleton<ChampionsManagerVM>()
-            .AddScoped<ChampionListPage>();
+            .AddSingleton<ApplicationVM>()
+			.AddSingleton<App>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

@@ -3,35 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LoL_MVVM.Components.ChampionItemView"
              xmlns:converters="clr-namespace:LoL_MVVM.Converters"
-             x:Name="View">
+             xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             x:Name="View"
+             x:DataType="viewmodel:ChampionVM">
 
     <ContentView.Resources>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
     </ContentView.Resources>
-    <SwipeView >
-        <SwipeView.RightItems>
-            <SwipeItem Text="Delete" BackgroundColor="Red" />
-            <SwipeItem Text="Modifier" BackgroundColor="{StaticResource Gray400}"/>
-        </SwipeView.RightItems>
-        
-        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="5"
-              RowDefinitions="1*,1*,1*">
-            <Image Grid.RowSpan="2" 
-                   Aspect="AspectFill" 
-                   HeightRequest="40" 
-                   WidthRequest="40"
-                   Margin="2"
-                   Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" />
 
-            <Label Text="{Binding Name}"
-                   Grid.Column="1" 
-                   FontSize="16" />
-            <Label Text="{Binding Class }"
-                   Grid.Row="1" 
-                   Grid.Column="1" 
-                   FontSize="12"
-                   VerticalOptions="End" />
-        </Grid>
-    </SwipeView>
+
+            
+            <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="5"
+                  RowDefinitions="1*,1*">
+                <Image Grid.RowSpan="2" 
+                       Aspect="AspectFill" 
+                       HeightRequest="40" 
+                       WidthRequest="40"
+                       Margin="2"
+                       Source="{Binding Icon, Converter={StaticResource Base64ToImageSource}}" />
+
+                <Label Text="{Binding Name}"
+                       Grid.Column="1" 
+                       FontSize="16" />
+                <Label Text="{Binding Class }"
+                       Grid.Row="1" 
+                       Grid.Column="1" 
+                       FontSize="12"
+                       VerticalOptions="End" />
+            </Grid>
+
+
 
 </ContentView>
