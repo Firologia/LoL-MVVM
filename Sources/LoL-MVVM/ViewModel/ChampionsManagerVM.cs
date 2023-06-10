@@ -61,8 +61,7 @@ public class ChampionsManagerVM : INotifyPropertyChanged
     {
         this.dataManager = dataManager;
         Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
-        totalItems = dataManager.ChampionsMgr.GetNbItems().Result;
-        TotalPages = (int) Math.Ceiling((double) totalItems / pageSize);
+        UpdatePagination();
         
         #pragma warning disable CA1416
         
@@ -95,11 +94,19 @@ public class ChampionsManagerVM : INotifyPropertyChanged
             champions.Add(new ChampionVM(champion!));
         }
     }
+    
+    private void UpdatePagination() {
+        totalItems = dataManager.ChampionsMgr.GetNbItems().Result;
+        TotalPages = (int) Math.Ceiling((double) totalItems / pageSize);
+    }
 
     public void DeleteChampion(ChampionVM championVM)
     {
         dataManager.ChampionsMgr.DeleteItem(championVM.Model);
         LoadChampions();
+        UpdatePagination();
+        //Refresh next page
+        (NextPageCommand as Command).ChangeCanExecute();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
