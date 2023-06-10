@@ -19,6 +19,8 @@ namespace LoL_MVVM.ViewModel
 		}
 		
 		public ICommand ChampionDetailsCommand { get; }
+		public ICommand EditCommand { get; }
+		public ICommand DeleteCommand { get; }
 
 		public ApplicationVM(ChampionsManagerVM championsManagerVM)
 		{
@@ -26,6 +28,8 @@ namespace LoL_MVVM.ViewModel
 			ChampionsManagerVM = championsManagerVM;
 			//Set the commands
 			ChampionDetailsCommand = new Command<ChampionVM>(GoToDetailsPage);
+			EditCommand = new Command<ChampionVM>(GoToEditPage);
+			DeleteCommand = new Command<ChampionVM>(ChampionsManagerVM.DeleteChampion);
 		}
 		
         
@@ -35,6 +39,12 @@ namespace LoL_MVVM.ViewModel
 			if (championVM == null) return;
 			Navigation.PushAsync(new ChampionDetailsPage(championVM));
 		}
+
+        private void GoToEditPage(ChampionVM championVM)
+        {
+	        if (championVM == null) return;
+	        Navigation.PushAsync(new ChampionEditPage(championVM));
+        }
 
     }
 }

@@ -9,9 +9,10 @@ using ViewModel.Utils;
 
 namespace ViewModel
 {
-    public class ChampionVM : GenericClassVM<Champion> {
+    public class ChampionVM : GenericClassVM<Champion>
+    {
 
-
+        internal new Champion Model => base.model;
         public string Name => model.Name;
         public string Bio 
         {

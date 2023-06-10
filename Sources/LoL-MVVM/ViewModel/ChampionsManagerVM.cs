@@ -96,6 +96,12 @@ public class ChampionsManagerVM : INotifyPropertyChanged
         }
     }
 
+    public void DeleteChampion(ChampionVM championVM)
+    {
+        dataManager.ChampionsMgr.DeleteItem(championVM.Model);
+        LoadChampions();
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

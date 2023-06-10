@@ -6,7 +6,7 @@ namespace LoL_MVVM.Pages;
 
 public partial class ChampionListPage : ContentPage
 {
-    private ApplicationVM ApplicationVM = (Application.Current as App).ApplicationVM;
+    public ApplicationVM ApplicationVM { get; } = (Application.Current as App).ApplicationVM;
 	public ChampionListPage()
     {
         InitializeComponent();
