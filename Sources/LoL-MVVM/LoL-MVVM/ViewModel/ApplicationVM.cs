@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using ViewModel;
+﻿using ViewModel;
 using Custom_Toolkit_MVVM;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
 using LoL_MVVM.Pages;
-using StubLib;
+using Model;
 
 namespace LoL_MVVM.ViewModel
 {
@@ -13,7 +10,7 @@ namespace LoL_MVVM.ViewModel
 	{
 		public ChampionsManagerVM ChampionsManagerVM { get; }
 
-		public INavigation Navigation
+		public static INavigation Navigation
 		{
 			get => Application.Current.MainPage.Navigation;
 		}
@@ -21,6 +18,8 @@ namespace LoL_MVVM.ViewModel
 		public ICommand ChampionDetailsCommand { get; }
 		public ICommand EditCommand { get; }
 		public ICommand DeleteCommand { get; }
+		public ICommand AddCommand { get; }
+		public ICommand CreateCommand { get; }
 
 		public ApplicationVM(ChampionsManagerVM championsManagerVM)
 		{
@@ -30,6 +29,9 @@ namespace LoL_MVVM.ViewModel
 			ChampionDetailsCommand = new Command<ChampionVM>(GoToDetailsPage);
 			EditCommand = new Command<ChampionVM>(GoToEditPage);
 			DeleteCommand = new Command<ChampionVM>(ChampionsManagerVM.DeleteChampion);
+			CreateCommand = new Command(CreateChampion);
+			//AddCommand = new Command<ChampionVM>(ChampionsManagerVM.AddChampion);
+			
 		}
 		
         
@@ -43,7 +45,19 @@ namespace LoL_MVVM.ViewModel
         private void GoToEditPage(ChampionVM championVM)
         {
 	        if (championVM == null) return;
-	        Navigation.PushAsync(new ChampionEditPage(championVM));
+	        Navigation.PushAsync(new ChampionEditPage(new EditVM(championVM)));
+        }
+        
+        
+
+        private async void CreateChampion()
+        {
+	        //Ask the user for the name of the champion
+	        string result = await Shell.Current.DisplayPromptAsync("Create Champion", "Enter the name of the champion"); 
+	        //If the user cancels the prompt, the result will be null
+	        if (result == null) return;
+	        //Create the champion and go to the edit page
+	        Navigation.PushAsync(new ChampionEditPage(new EditVM(ChampionsManagerVM.CreateChampion(result))));
         }
 
     }

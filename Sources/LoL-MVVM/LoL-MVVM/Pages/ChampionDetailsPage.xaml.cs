@@ -13,9 +13,4 @@ public partial class ChampionDetailsPage : ContentPage
 		BindingContext = ChampionVM;
 
 	}
-
-    private void Edit_Champion(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new ChampionEditPage(ChampionVM));
-    }
 }

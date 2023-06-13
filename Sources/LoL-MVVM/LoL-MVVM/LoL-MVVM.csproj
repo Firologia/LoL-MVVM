@@ -110,6 +110,5 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Utils\" />
-	  <Folder Include="ViewModel\" />
 	</ItemGroup>
 </Project>

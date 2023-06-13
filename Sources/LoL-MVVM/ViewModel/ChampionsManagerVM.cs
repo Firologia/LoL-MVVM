@@ -109,6 +109,22 @@ public class ChampionsManagerVM : INotifyPropertyChanged
         (NextPageCommand as Command).ChangeCanExecute();
     }
 
+    public void AddChampion(ChampionVM championVM)
+    {
+        dataManager.ChampionsMgr.AddItem(championVM.Model);
+        //Update the pagination
+        UpdatePagination();
+        //Load the champions
+        LoadChampions();
+        //Refresh next page
+        (NextPageCommand as Command).ChangeCanExecute();
+    }
+
+    public ChampionVM CreateChampion(string name)
+    {
+        return new ChampionVM(new Champion(name, ChampionClass.Assassin));
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

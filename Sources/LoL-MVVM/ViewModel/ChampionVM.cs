@@ -46,7 +46,7 @@ namespace ViewModel
                 (model, value) => { model.Image.Base64 = value!; });
 
         }
-        public ObservableDictionary<string, int> _characteristics { get; set; } = new ObservableDictionary<string,int>();
+        public ObservableDictionary<string, int> _characteristics { get; set; } = new();
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private init; }
         public ObservableCollection<SkillVM> _skills = new();

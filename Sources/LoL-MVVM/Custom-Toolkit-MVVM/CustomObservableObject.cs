@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Custom_Toolkit_MVVM
@@ -13,9 +14,9 @@ namespace Custom_Toolkit_MVVM
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void SetPropertyChanged<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = "")
+        protected void SetPropertyChanged<T>([NotNullIfNotNull(nameof(newValue))] ref T oldValue, T newValue, IEqualityComparer<T> comparer , [CallerMemberName] string propertyName = "")
         {
-            if (oldValue.Equals(newValue))
+            if (comparer.Equals(oldValue, newValue))
                 return;
 
             oldValue = newValue;

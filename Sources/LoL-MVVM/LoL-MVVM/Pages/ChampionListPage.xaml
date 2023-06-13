@@ -19,6 +19,10 @@
         <!-- Call the load command at the end of loading of this page -->
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding ChampionsManagerVM.LoadCommand}"/>
     </ContentPage.Behaviors>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ajouter" Command="{Binding CreateCommand}" />
+    </ContentPage.ToolbarItems>
 
     <VerticalStackLayout>
 

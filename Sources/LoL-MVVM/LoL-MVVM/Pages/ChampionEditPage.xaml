@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:LoL_MVVM.Converters"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
-             xmlns:utils="clr-namespace:ViewModel.Utils;assembly=ViewModel"
+             xmlns:vmapplicative="clr-namespace:LoL_MVVM.ViewModel"
              xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
+             xmlns:edition="clr-namespace:LoL_MVVM.Components.Edition"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
-             Title="ChampionEditPage"
-             >
+             x:DataType="vmapplicative:EditVM"
+             Title="ChampionEditPage">
 
     <ContentPage.Resources>
-        <converters:EnumToValuesConverter  x:Key="EnumToValuesConverter"
-                                            x:TypeArguments="enums:ChampionClassVM"/>
+        <converters:EnumToValuesConverter x:Key="EnumToValuesConverter" x:TypeArguments="enums:ChampionClassVM"/>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
 
         <Style x:Key="PageTitle" TargetType="{x:Type Label}" >
@@ -41,37 +41,26 @@
                 <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    Grid.Row="0" Grid.Column="0"/>
 
-                <Border  Grid.Row="0" Grid.Column="1" Margin="0,0,5,0">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="5"/>
-                    </Border.StrokeShape>
-                    <Editor Text="{Binding ChampionVM.Name}" 
-                            IsReadOnly="true" BackgroundColor="#efe7b7"  />
-                </Border>
+                <edition:ReadOnlyTextAreaView Grid.Row="0" Grid.Column="1" TextValue="{Binding EditableChampionVM.Name}" />
 
                 <Label Text="Icone :" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
-                    <ImageButton Source="{Binding ChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" Clicked="Icon_Button_Clicked" HeightRequest="50" WidthRequest="50" />
+                    <ImageButton Source="{Binding EditableChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" Command="{Binding EditIconCommand}" HeightRequest="50" WidthRequest="50" />
                 </Border>
 
                 <Label Text="Image :" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start" BackgroundColor="#efe7b7">
-                    <ImageButton Source="{Binding ChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" Clicked="Image_Button_OnClicked" HeightRequest="150" WidthRequest="300" />
+                    <ImageButton Source="{Binding EditableChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" Command="{Binding EditImageCommand}" HeightRequest="150" WidthRequest="300" />
                 </Border>
 
                 <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <Border  Grid.Row="3" Grid.Column="1" Margin="0,0,5,0">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="5"/>
-                    </Border.StrokeShape>
-                <Editor x:Name="BioEditor" Text="{Binding ChampionVM.Bio}" BackgroundColor="#efe7b7" />
-                </Border>
+                <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableChampionVM.Bio}" />
 
                 <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
                 <CollectionView Grid.Row="4" Grid.Column="1"
                                 ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}"
-                                x:Name="ClassesCollectionView" SelectedItem="{Binding ChampionVM.Class}" SelectionMode="Single">
+                                x:Name="ClassesCollectionView" SelectedItem="{Binding EditableChampionVM.ChampionClass}" SelectionMode="Single">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                                          Span="2"/>
@@ -101,13 +90,12 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-               
             </Grid>
 
         </ScrollView>
         <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="50" Grid.Row="2" Margin="0,5,0,10">
-            <Button Text="Modifier" Clicked="Confirm_OnClicked"/>
-            <Button Text="Annuler" Clicked="Cancel_OnClicked"/>
+            <Button Text="Modifier" Command="{Binding SubmitCommand}"/>
+            <Button Text="Annuler" Command="{Binding CancelCommand}"/>
         </HorizontalStackLayout>
 
     </Grid>

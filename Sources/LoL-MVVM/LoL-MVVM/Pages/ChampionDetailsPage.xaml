@@ -22,7 +22,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Modifier" Clicked="Edit_Champion" />
+        <ToolbarItem Text="Modifier" />
     </ContentPage.ToolbarItems>
 
     <ScrollView Background="Black" Orientation="Vertical">
