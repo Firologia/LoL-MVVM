@@ -42,10 +42,10 @@ namespace LoL_MVVM.ViewModel
 			Navigation.PushAsync(new ChampionDetailsPage(championVM));
 		}
 
-        private void GoToEditPage(ChampionVM championVM)
+        private async void GoToEditPage(ChampionVM championVM)
         {
 	        if (championVM == null) return;
-	        Navigation.PushAsync(new ChampionEditPage(new EditVM(championVM)));
+	        await Navigation.PushAsync(new ChampionEditPage(new EditVM(championVM)));
         }
         
         
@@ -57,7 +57,7 @@ namespace LoL_MVVM.ViewModel
 	        //If the user cancels the prompt, the result will be null
 	        if (result == null) return;
 	        //Create the champion and go to the edit page
-	        Navigation.PushAsync(new ChampionEditPage(new EditVM(ChampionsManagerVM.CreateChampion(result))));
+	        await Navigation.PushAsync(new ChampionEditPage(new EditVM(ChampionsManagerVM.CreateChampion(result))));
         }
 
     }

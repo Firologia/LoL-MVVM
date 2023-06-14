@@ -58,15 +58,19 @@
 
                 <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
-                <CollectionView Grid.Row="4" Grid.Column="1"
-                                ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}"
-                                x:Name="ClassesCollectionView" SelectedItem="{Binding EditableChampionVM.ChampionClass}" SelectionMode="Single">
+                
+                <CollectionView Grid.Row="4" Grid.Column="1" HeightRequest="200" HorizontalOptions="Fill"
+                                ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}" 
+                                SelectedItem="{Binding EditableChampionVM.ChampionClass}" SelectionMode="Single">
+
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal"
                                          Span="2"/>
                     </CollectionView.ItemsLayout>
+
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
+                            
                             <Border BackgroundColor="#efe7b7" HeightRequest="100" WidthRequest="100">
 
                                 <Border.StrokeShape>
@@ -89,7 +93,10 @@
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+                    
                 </CollectionView>
+                
+                
             </Grid>
 
         </ScrollView>

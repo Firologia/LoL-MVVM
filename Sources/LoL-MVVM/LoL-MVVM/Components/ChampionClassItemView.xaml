@@ -12,12 +12,13 @@
     </ContentView.Resources>
 
     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-            <Image Source="{Binding Converter={StaticResource ClassIconConverter}}" HeightRequest="40" WidthRequest="40">
-                <Image.Behaviors>
-                    <toolkit:IconTintColorBehavior TintColor="Black" />
-                </Image.Behaviors>
-            </Image>
-            <Label Text="{Binding }" TextColor="Black" />
-        </VerticalStackLayout>
+        <Image Source="{Binding Converter={StaticResource ClassIconConverter}}" 
+               HeightRequest="40" WidthRequest="40">
+            <Image.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="Black" />
+            </Image.Behaviors>
+        </Image>
+        <Label Text="{Binding }" TextColor="Black" />
+    </VerticalStackLayout>
 
 </ContentView>
