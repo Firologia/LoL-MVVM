@@ -17,7 +17,16 @@ public partial class TextAreaView : ContentView
     public static readonly BindableProperty TextValueProperty =
         BindableProperty.Create(nameof(TextValue), typeof(string), typeof(ReadOnlyTextAreaView), null, BindingMode.TwoWay);
 
-    
+    public string Hint
+    {
+        get => (string)GetValue(HintProperty);
+        set => SetValue(HintProperty, value);
+    }
+
+    public static readonly BindableProperty HintProperty =
+        BindableProperty.Create(nameof(Hint), typeof(string), typeof(ReadOnlyTextAreaView), null, BindingMode.TwoWay);
+
+
     public TextAreaView()
     {
         InitializeComponent();

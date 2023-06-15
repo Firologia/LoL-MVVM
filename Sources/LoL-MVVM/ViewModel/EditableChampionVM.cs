@@ -43,5 +43,8 @@ public class EditableChampionVM : CustomObservableObject
 
     public ObservableDictionary<string, int> Characteristics { get; set; } = new();
 
-
+    public void AddCharacteristic(string key, int value)
+    {
+        Characteristics.Add(key, value);
+    }
 }

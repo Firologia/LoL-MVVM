@@ -9,7 +9,7 @@
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="5"/>
         </Border.StrokeShape>
-        <Editor Text="{Binding TextValue, Source={x:Reference View}, Mode=TwoWay}" BackgroundColor="#efe7b7"  />
+        <Editor Text="{Binding TextValue, Source={x:Reference View}, Mode=TwoWay}" Placeholder="{Binding Hint, Source={x:Reference View}}" BackgroundColor="#efe7b7"  />
     </Border>
     
 </ContentView>

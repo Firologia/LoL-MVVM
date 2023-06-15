@@ -35,7 +35,7 @@
 
         <ScrollView Grid.Row="1" Orientation="Vertical">
 
-            <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto" RowSpacing="20">
+            <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto, auto" RowSpacing="20">
   
                 <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    Grid.Row="0" Grid.Column="0"/>
@@ -103,7 +103,7 @@
                         <CollectionView.ItemTemplate >
                             <DataTemplate >
 
-                                <edition:CaracteristicEditItemView Name="{Binding Key}" Value="{Binding Value}" />
+                                <edition:CaracteristicEditItemView Name="{Binding Key, Mode=TwoWay}" Value="{Binding Value, Mode=TwoWay}" />
 
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -111,6 +111,13 @@
                     </CollectionView>
 
                 </Border>
+
+                <HorizontalStackLayout Grid.Row="6" Grid.Column="1">
+
+                    <edition:TextAreaView TextValue="{Binding SelectedCharacteristic.Key, Mode=TwoWay}" Hint="Caractéristiques"/>
+                    <edition:TextAreaView TextValue="{Binding SelectedCharacteristic.Value, Mode=TwoWay}"/>
+                    <Button Text="Ajouter" Command="{Binding AddCharacteristicCommand}"/>
+                </HorizontalStackLayout>
                 
                 
                 

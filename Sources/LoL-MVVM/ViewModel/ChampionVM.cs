@@ -2,7 +2,6 @@
 using Custom_Toolkit_MVVM;
 using Model;
 using ViewModel.Enums;
-using ViewModel.Utils;
 
 namespace ViewModel
 {
@@ -87,5 +86,16 @@ namespace ViewModel
             Skills = new(_skills);
             Skins = new(_skins);
         }
+
+        public void AddCharacteristic(string key, int value)
+        {
+            characteristics.Add(key, value);
+        }
+
+        public void ClearCharacteristics()
+        {
+            characteristics.Clear();
+        }
+
     }
 }

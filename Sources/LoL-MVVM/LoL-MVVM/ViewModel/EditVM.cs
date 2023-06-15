@@ -12,9 +12,13 @@ public class EditVM
     private ApplicationVM applicationVM => (Application.Current as App).ApplicationVM;
     public EditableChampionVM EditableChampionVM { get; set; }
     private ChampionVM championVM;
+
+    public KeyValuePair<string, int> SelectedCharacteristic { get; set; } = new();
     
     public ICommand EditIconCommand { get; }
     public ICommand EditImageCommand { get; }
+
+    public ICommand AddCharacteristicCommand { get; }
     
     //Principals commands
     public ICommand SubmitCommand { get; }
@@ -47,7 +51,12 @@ public class EditVM
                 if(image is not null) EditableChampionVM.LargeImage = image;
             
             });
-        
+        AddCharacteristicCommand = new Command(
+            execute =>
+            {
+                EditableChampionVM.AddCharacteristic(SelectedCharacteristic.Key,SelectedCharacteristic.Value);
+            });
+
         SubmitCommand = new Command(
         execute =>
             {
@@ -55,6 +64,13 @@ public class EditVM
                 championVM.Class = EditableChampionVM.ChampionClass;
                 championVM.Icon = EditableChampionVM.Icon;
                 championVM.LargeImage = EditableChampionVM.LargeImage;
+
+                championVM.ClearCharacteristics();
+                foreach (var keyValuePair in EditableChampionVM.Characteristics)
+                {
+                    championVM.AddCharacteristic(keyValuePair.Key, keyValuePair.Value);
+
+                }
                 //The champion is added if it doesn't exist in the list
                 applicationVM.ChampionsManagerVM.AddChampion(championVM);
                 //We remove the page from the navigation stack
@@ -92,7 +108,7 @@ public class EditVM
 
         return null;
     }
-    
+
     private async Task<string> PickImage()
     {
         var result = await PickAFile(new PickOptions
@@ -104,8 +120,10 @@ public class EditVM
         if(result != null) return await result.ToBase64();
         return null;
     }
-    
-    
-    
-    
+
+
+
+
+
+
 }
