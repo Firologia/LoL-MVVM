@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using CommunityToolkit.Maui.Core.Extensions;
 using LoL_MVVM.Pages;
 using LoL_MVVM.Utils;
 using Model;
@@ -8,6 +9,7 @@ namespace LoL_MVVM.ViewModel;
 
 public class EditVM
 {
+    private ApplicationVM applicationVM => (Application.Current as App).ApplicationVM;
     public EditableChampionVM EditableChampionVM { get; set; }
     private ChampionVM championVM;
     
@@ -27,7 +29,8 @@ public class EditVM
             Bio = championVM.Bio,
             ChampionClass = championVM.Class,
             Icon = championVM.Icon,
-            LargeImage = championVM.LargeImage
+            LargeImage = championVM.LargeImage,
+            Characteristics = championVM.Characteristics.ToObservableDictionary()
         };
         
         EditIconCommand = new Command(async execute =>
@@ -52,6 +55,9 @@ public class EditVM
                 championVM.Class = EditableChampionVM.ChampionClass;
                 championVM.Icon = EditableChampionVM.Icon;
                 championVM.LargeImage = EditableChampionVM.LargeImage;
+                //The champion is added if it doesn't exist in the list
+                applicationVM.ChampionsManagerVM.AddChampion(championVM);
+                //We remove the page from the navigation stack
                 ApplicationVM.Navigation.RemovePage(ApplicationVM.Navigation.NavigationStack[^1]);
             });
         

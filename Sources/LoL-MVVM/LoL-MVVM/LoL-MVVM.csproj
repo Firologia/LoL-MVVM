@@ -86,6 +86,9 @@
 	  <MauiXaml Update="Components\ChampionItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Components\Edition\CaracteristicEditItemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Components\SkillItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

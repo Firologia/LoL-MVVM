@@ -7,7 +7,6 @@
              xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
              xmlns:edition="clr-namespace:LoL_MVVM.Components.Edition"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
-             x:DataType="vmapplicative:EditVM"
              Title="ChampionEditPage">
 
     <ContentPage.Resources>
@@ -34,9 +33,9 @@
             <Border HeightRequest="1" Margin="75,0" BackgroundColor="#b29d65" />
         </VerticalStackLayout>
 
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" Orientation="Vertical">
 
-            <Grid ColumnDefinitions="1*,4*" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="20">
+            <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto" RowSpacing="20">
   
                 <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    Grid.Row="0" Grid.Column="0"/>
@@ -54,7 +53,7 @@
                 </Border>
 
                 <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableChampionVM.Bio}" />
+                <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableChampionVM.Bio, Mode=TwoWay}" />
 
                 <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
@@ -95,6 +94,25 @@
                     </CollectionView.ItemTemplate>
                     
                 </CollectionView>
+                
+                <Label Text="Caractéristiques :" Grid.Row="5" Grid.Column="0"/>
+                
+                <Border Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent">
+
+                    <CollectionView ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
+                        <CollectionView.ItemTemplate >
+                            <DataTemplate >
+
+                                <edition:CaracteristicEditItemView Name="{Binding Key}" Value="{Binding Value}" />
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+
+                </Border>
+                
+                
                 
                 
             </Grid>

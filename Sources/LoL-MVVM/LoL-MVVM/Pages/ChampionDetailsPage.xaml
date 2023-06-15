@@ -48,7 +48,7 @@
                     <!-- Row 3 Caractéristiques-->
 
                 <CollectionView Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,50,0,0"
-                                ItemsSource="{Binding _characteristics}" >
+                                ItemsSource="{Binding Characteristics}" >
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal" Span="2" HorizontalItemSpacing="20" VerticalItemSpacing="20" />
                     </CollectionView.ItemsLayout>

@@ -6,9 +6,10 @@ using System.Runtime.CompilerServices;
 
 namespace ViewModel.Utils;
 
-public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
+public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
 where TKey : notnull
 {
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

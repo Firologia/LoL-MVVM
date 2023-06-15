@@ -1,7 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Custom_Toolkit_MVVM;
 using Model;
 using ViewModel.Enums;
@@ -18,7 +15,7 @@ namespace ViewModel
         {
             get => model.Bio ;
             set => SetModelPropertyChanged(model.Bio, value, EqualityComparer<string>.Default, model,
-                (model, value) => { model.Icon = value!; });
+                (model, value) => { model.Bio = value!; });
 
         }
 
@@ -46,13 +43,15 @@ namespace ViewModel
                 (model, value) => { model.Image.Base64 = value!; });
 
         }
-        public ObservableDictionary<string, int> _characteristics { get; set; } = new();
+        
+        public ReadOnlyObservableDictionary<string, int> Characteristics { get; }
+        private readonly ObservableDictionary<string, int> characteristics = new();
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private init; }
-        public ObservableCollection<SkillVM> _skills = new();
+        private ObservableCollection<SkillVM> _skills = new();
 
         public ReadOnlyObservableCollection<SkinVM> Skins { get; private init; }
-        public ObservableCollection<SkinVM> _skins = new();
+        private ObservableCollection<SkinVM> _skins = new();
 
         public ChampionVM(Champion model) : base(model)
         {
@@ -61,8 +60,10 @@ namespace ViewModel
 
             foreach (var characteristic in model.Characteristics)
             {
-                _characteristics.Add(characteristic.Key, characteristic.Value);
+                characteristics.Add(characteristic.Key, characteristic.Value);
             }
+            
+            Characteristics = new(characteristics);
 
             foreach (var skill in model.Skills)
             {

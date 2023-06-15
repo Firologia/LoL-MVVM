@@ -1,5 +1,6 @@
 using Custom_Toolkit_MVVM;
 using ViewModel.Enums;
+using ViewModel.Utils;
 
 namespace ViewModel;
 
@@ -39,6 +40,8 @@ public class EditableChampionVM : CustomObservableObject
         set => SetPropertyChanged(ref largeImage, value, EqualityComparer<string>.Default);
     }
     private string largeImage;
+
+    public ObservableDictionary<string, int> Characteristics { get; set; } = new();
 
 
 }

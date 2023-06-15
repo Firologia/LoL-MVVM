@@ -17,6 +17,7 @@ public partial class ReadOnlyTextAreaView : ContentView
     public static readonly BindableProperty TextValueProperty =
         BindableProperty.Create(nameof(TextValue), typeof(string), typeof(ReadOnlyTextAreaView));
     
+
     public ReadOnlyTextAreaView()
     {
         InitializeComponent();
