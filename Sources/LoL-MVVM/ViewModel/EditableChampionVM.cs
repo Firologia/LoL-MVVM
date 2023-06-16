@@ -45,6 +45,7 @@ public class EditableChampionVM : CustomObservableObject
 
     public void AddCharacteristic(string key, int value)
     {
+        Characteristics.Remove(key);
         Characteristics.Add(key, value);
     }
 }

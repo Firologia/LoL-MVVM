@@ -13,7 +13,8 @@ public class EditVM
     public EditableChampionVM EditableChampionVM { get; set; }
     private ChampionVM championVM;
 
-    public KeyValuePair<string, int> SelectedCharacteristic { get; set; } = new();
+    public string CharacteristicKeyToAdd { get; set; }
+    public int CharacteristicValueToAdd { get; set; } = 0;
     
     public ICommand EditIconCommand { get; }
     public ICommand EditImageCommand { get; }
@@ -54,7 +55,7 @@ public class EditVM
         AddCharacteristicCommand = new Command(
             execute =>
             {
-                EditableChampionVM.AddCharacteristic(SelectedCharacteristic.Key,SelectedCharacteristic.Value);
+                EditableChampionVM.AddCharacteristic(CharacteristicKeyToAdd, CharacteristicValueToAdd);
             });
 
         SubmitCommand = new Command(

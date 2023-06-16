@@ -89,6 +89,7 @@ namespace ViewModel
 
         public void AddCharacteristic(string key, int value)
         {
+            if (characteristics.ContainsKey(key)) characteristics.Remove(key);
             characteristics.Add(key, value);
         }
 

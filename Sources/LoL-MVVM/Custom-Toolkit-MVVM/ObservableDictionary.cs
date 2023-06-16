@@ -6,7 +6,8 @@ using System.Runtime.CompilerServices;
 
 namespace Custom_Toolkit_MVVM;
 
-public sealed class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
+
+public class ObservableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
 where TKey : notnull
 {
 
@@ -26,7 +27,7 @@ where TKey : notnull
 
     #region constructors
 
-    public ObservableDictionary() : base(0, null) { }
+    public ObservableDictionary() : base(new Dictionary<TKey, TValue>()) { }
 
     public ObservableDictionary(int capacity) : base(capacity, null) { }
 
@@ -56,23 +57,23 @@ where TKey : notnull
     public new void Add(TKey tKey, TValue tValue)
     {
         base.Add(tKey, tValue);
-        OnCollectionChanged( new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(tKey, tValue)));
+        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(tKey, tValue)));
         OnPropertyChanged(nameof(Keys));
         OnPropertyChanged(nameof(Values));
         OnPropertyChanged(nameof(Count));
     }
-    
+
     public new bool TryAdd(TKey tKey, TValue tValue)
     {
         var result = base.TryAdd(tKey, tValue);
         if (!result) return result;
-        
+
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(tKey, tValue)));
-        
+
         OnPropertyChanged(nameof(Keys));
         OnPropertyChanged(nameof(Values));
         OnPropertyChanged(nameof(Count));
-        
+
         return result;
 
 
@@ -82,16 +83,16 @@ where TKey : notnull
     {
         var result = base.Remove(tKey);
         if (!result) return result;
-        
+
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new KeyValuePair<TKey, TValue>(tKey, this[tKey])));
-        
+
         OnPropertyChanged(nameof(Keys));
         OnPropertyChanged(nameof(Values));
         OnPropertyChanged(nameof(Count));
-        
+
         return result;
     }
-    
+
     public new TValue this[TKey key]
     {
         get => base[key];
@@ -101,23 +102,18 @@ where TKey : notnull
             base[key] = value;
             if (result)
             {
-                OnCollectionChanged( new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
                 OnPropertyChanged(nameof(Values));
             }
             else
             {
-                OnCollectionChanged( new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-                
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+
                 OnPropertyChanged(nameof(Keys));
                 OnPropertyChanged(nameof(Values));
                 OnPropertyChanged(nameof(Count));
             }
         }
     }
-
-
-
-
-
 
 }

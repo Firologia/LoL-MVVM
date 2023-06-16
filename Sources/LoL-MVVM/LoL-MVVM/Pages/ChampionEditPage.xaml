@@ -23,113 +23,103 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid BackgroundColor="Black" RowDefinitions="1*,10*,1*" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Annuler" Command="{Binding CancelCommand}" />
+        <ToolbarItem Text="Valider" Command="{Binding SubmitCommand}" />
 
-        <VerticalStackLayout Grid.Row="0">
-            <Label 
-                Text="Modifier le champion"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" Style="{StaticResource PageTitle}" />
-            <Border HeightRequest="1" Margin="75,0" BackgroundColor="#b29d65" />
-        </VerticalStackLayout>
+    </ContentPage.ToolbarItems>
+        
+            <ScrollView>
+                <VerticalStackLayout Grid.Row="1">
 
-        <ScrollView Grid.Row="1" Orientation="Vertical">
-
-            <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto, auto" RowSpacing="20">
+                <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto, auto" RowSpacing="20">
   
-                <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                   Grid.Row="0" Grid.Column="0"/>
+                    <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       Grid.Row="0" Grid.Column="0"/>
 
-                <edition:ReadOnlyTextAreaView Grid.Row="0" Grid.Column="1" TextValue="{Binding EditableChampionVM.Name}" />
+                    <edition:ReadOnlyTextAreaView Grid.Row="0" Grid.Column="1" TextValue="{Binding EditableChampionVM.Name}" />
 
-                <Label Text="Icone :" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
-                    <ImageButton Source="{Binding EditableChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" Command="{Binding EditIconCommand}" HeightRequest="50" WidthRequest="50" />
-                </Border>
+                    <Label Text="Icone :" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
+                        <ImageButton Source="{Binding EditableChampionVM.Icon, Converter={StaticResource Base64ToImageSource}}" Command="{Binding EditIconCommand}" HeightRequest="50" WidthRequest="50" />
+                    </Border>
 
-                <Label Text="Image :" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start" BackgroundColor="#efe7b7">
-                    <ImageButton Source="{Binding EditableChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" Command="{Binding EditImageCommand}" HeightRequest="150" WidthRequest="300" />
-                </Border>
+                    <Label Text="Image :" Grid.Column="0" Grid.Row="2" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start" BackgroundColor="#efe7b7">
+                        <ImageButton Source="{Binding EditableChampionVM.LargeImage, Converter={StaticResource Base64ToImageSource}}" Command="{Binding EditImageCommand}" HeightRequest="150" WidthRequest="300" />
+                    </Border>
 
-                <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableChampionVM.Bio, Mode=TwoWay}" />
+                    <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableChampionVM.Bio, Mode=TwoWay}" />
 
-                <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
                 
-                <CollectionView Grid.Row="4" Grid.Column="1" HeightRequest="200" HorizontalOptions="Fill"
-                                ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}" 
-                                SelectedItem="{Binding EditableChampionVM.ChampionClass}" SelectionMode="Single">
+                    <CollectionView Grid.Row="4" Grid.Column="1" HeightRequest="200" HorizontalOptions="Fill"
+                                    ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}" 
+                                    SelectedItem="{Binding EditableChampionVM.ChampionClass}" SelectionMode="Single">
 
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Horizontal"
-                                         Span="2"/>
-                    </CollectionView.ItemsLayout>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal"
+                                             Span="2"/>
+                        </CollectionView.ItemsLayout>
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
                             
-                            <Border BackgroundColor="#efe7b7" HeightRequest="100" WidthRequest="100">
+                                <Border BackgroundColor="#efe7b7" HeightRequest="100" WidthRequest="100">
 
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="40,40,0,40"/>
-                                </Border.StrokeShape>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="40,40,0,40"/>
+                                    </Border.StrokeShape>
 
-                                <components:ChampionClassItemView/>
+                                    <components:ChampionClassItemView/>
 
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup Name="CommonStates">
-                                        <VisualState Name="Normal"></VisualState>
-                                        <VisualState Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup Name="CommonStates">
+                                            <VisualState Name="Normal"></VisualState>
+                                            <VisualState Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    
-                </CollectionView>
-                
-                <Label Text="Caractéristiques :" Grid.Row="5" Grid.Column="0"/>
-                
-                <Border Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent">
-
-                    <CollectionView ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
-                        <CollectionView.ItemTemplate >
-                            <DataTemplate >
-
-                                <edition:CaracteristicEditItemView Name="{Binding Key, Mode=TwoWay}" Value="{Binding Value, Mode=TwoWay}" />
-
+                                </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-
+                    
                     </CollectionView>
+                
+                    <Label Text="Caractéristiques :" Grid.Row="5" Grid.Column="0"/>
+                
+                    <Border Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent">
 
-                </Border>
+                        <CollectionView HeightRequest="200" ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
+                            <CollectionView.ItemTemplate >
+                                <DataTemplate >
 
-                <HorizontalStackLayout Grid.Row="6" Grid.Column="1">
+                                    <edition:CaracteristicEditItemView Name="{Binding Key, Mode=TwoWay}" Value="{Binding Value, Mode=TwoWay}" />
 
-                    <edition:TextAreaView TextValue="{Binding SelectedCharacteristic.Key, Mode=TwoWay}" Hint="Caractéristiques"/>
-                    <edition:TextAreaView TextValue="{Binding SelectedCharacteristic.Value, Mode=TwoWay}"/>
-                    <Button Text="Ajouter" Command="{Binding AddCharacteristicCommand}"/>
-                </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
+
+                    </Border>
+
+                    <HorizontalStackLayout Grid.Row="6" Grid.Column="1">
+
+                        <edition:TextAreaView TextValue="{Binding CharacteristicKeyToAdd, Mode=TwoWay}" Hint="Caractéristiques"/>
+                        <edition:TextAreaView TextValue="{Binding CharacteristicValueToAdd, Mode=TwoWay}"/>
+                        <Button Text="Ajouter" Command="{Binding AddCharacteristicCommand}"/>
+                    </HorizontalStackLayout>
                 
                 
                 
                 
-            </Grid>
-
-        </ScrollView>
-        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="50" Grid.Row="2" Margin="0,5,0,10">
-            <Button Text="Modifier" Command="{Binding SubmitCommand}"/>
-            <Button Text="Annuler" Command="{Binding CancelCommand}"/>
-        </HorizontalStackLayout>
-
-    </Grid>
-
+                </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
 </ContentPage>
