@@ -17,11 +17,6 @@
             <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
         </ResourceDictionary>
 
-        <Style x:Key="PageTitle" TargetType="{x:Type Label}" >
-            <Setter Property="TextColor" Value="#b29d65" />
-            <Setter Property="FontSize" Value="28" />
-        </Style>
-
         <Style TargetType="{x:Type Label}">
             <Setter Property="TextColor" Value="#b29d65" />
         </Style>

@@ -1,57 +1,42 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Custom_Toolkit_MVVM;
 using Model;
 
 namespace ViewModel;
 
-public class SkinVM : INotifyPropertyChanged
+public class SkinVM : GenericClassVM<Skin>
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    private Skin _model;
-
-    public string Name => _model.Name;
+    public string Name => model.Name;
 
     public string Description
     {
-        get => _model.Description;
-        set
-        {
-            if(_model.Description.Equals(value)) return;
-            _model.Description = value;
-            OnPropertyChanged();
-        }
+        get => model.Description;
+        set => SetModelPropertyChanged(model.Description, value, EqualityComparer<string>.Default, model, (skin, s) => { skin.Description = s; });
     }
 
     public string Icon
     {
-        get => _model.Icon;
-        set
-        {
-            if(_model.Icon.Equals(value)) return;
-            _model.Icon = value;
-            OnPropertyChanged();
-        }
+        get => model.Icon;
+        set => SetModelPropertyChanged(model.Icon, value, EqualityComparer<string>.Default, model, (skin, s) => { skin.Icon = s; });
+    }
+    
+    public string Image
+    {
+        get => model.Image.Base64;
+        set => SetModelPropertyChanged(model.Image.Base64, value, EqualityComparer<string>.Default, model, (skin, s) => { skin.Image.Base64 = s; });
     }
 
     public float Price
     {
-        get => _model.Price;
-        set
-        {
-            if(_model.Price.Equals(value)) return;
-            _model.Price = value;
-            OnPropertyChanged();
-        }
+        get => model.Price;
+        set => SetModelPropertyChanged(model.Price, value, EqualityComparer<float>.Default, model, (skin, f) => { skin.Price = f; });
     }
 
-    public SkinVM(Skin model)
+    public SkinVM(Skin model) : base(model)
     {
-        _model = model;
     }
+    public Skin GetModel() => model;
+
 }

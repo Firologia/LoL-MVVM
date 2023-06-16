@@ -25,6 +25,11 @@ public class SkillVM : GenericClassVM<Skill>
         public SkillVM(Skill model) : base(model)
         {
         }
+
+        public SkillVM(EditableSkillVM editableSkillVM) : base(new Skill(editableSkillVM.Name, editableSkillVM.Type.ToModel(), editableSkillVM.Description))
+        {
+            
+        }
         
         public bool Equals(SkillVM? other)
             => Name.Equals(other?.Name) && Type == other.Type;

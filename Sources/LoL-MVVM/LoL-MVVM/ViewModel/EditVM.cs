@@ -3,7 +3,6 @@ using CommunityToolkit.Maui.Core.Extensions;
 using Custom_Toolkit_MVVM;
 using LoL_MVVM.Pages;
 using LoL_MVVM.Utils;
-using Model;
 using ViewModel;
 
 namespace LoL_MVVM.ViewModel;

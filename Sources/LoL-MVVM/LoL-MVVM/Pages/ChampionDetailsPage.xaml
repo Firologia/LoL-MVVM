@@ -5,12 +5,16 @@
              xmlns:converters="clr-namespace:LoL_MVVM.Converters"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
              xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Name="Page"
              Title="ChampionDetailsPage">
 
     <ContentPage.Resources>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
         <converters:ClassIconConverter x:Key="ClassIconConverter" />
+        <ResourceDictionary>
+            <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
+        </ResourceDictionary>
 
         <Style x:Key="CategoryTitle" TargetType="{x:Type Label}" >
             <Setter Property="TextColor" Value="#b29d65" />
@@ -76,13 +80,19 @@
 
                 <Label Text="Skins" Grid.Row="4" Margin="0,30,0,0" Style="{StaticResource CategoryTitle}" />
 
-                <CollectionView ItemsSource="{Binding Skins}" Grid.Row="4" Grid.ColumnSpan="3"  Margin="0,80,0,0" >
-                    <CollectionView.ItemTemplate>
+                <ListView ItemsSource="{Binding Skins}" Grid.Row="4" Grid.ColumnSpan="3" Margin="0,80,0,0" SelectionMode="None" RowHeight="80" >
+                    <ListView.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="ItemTapped" Command="{Binding ApplicationVM.SkinDetailsCommand, Source={x:Reference Page}}" EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <components:SkinItemView />
+                            <ViewCell>
+                                <components:SkinItemView />
+                            </ViewCell>
+
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    </ListView.ItemTemplate>
+                </ListView>
 
             </Grid>
 

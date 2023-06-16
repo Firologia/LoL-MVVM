@@ -21,7 +21,7 @@ namespace ViewModel
         public ChampionClassVM Class
         {
             get => (ChampionClassVM) Enum.Parse<ChampionClassVM>(model.Class.ToString());
-            set => SetModelPropertyChanged(model.Class, Enum.Parse<ChampionClass>(value.ToString()), EqualityComparer<ChampionClass>.Default, model,
+            set => SetModelPropertyChanged(model.Class, value.ToModel(), EqualityComparer<ChampionClass>.Default, model,
                     (model, value) =>
                     {
                         model.Class = value;

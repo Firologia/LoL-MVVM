@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:LoL_MVVM.Converters"
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             x:Class="LoL_MVVM.Pages.SkinDetailsPage"
+             x:DataType="viewModel:SkinVM"
+             x:Name="Page">
+
+    
+    <ContentPage.Resources>
+        <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
+
+        <Style x:Key="CategoryTitle" TargetType="{x:Type Label}" >
+            <Setter Property="TextColor" Value="#b29d65" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="TextColor" Value="#b29d65" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Modifier" Command="{Binding ApplicationVM.EditCommand, Source={x:Reference Page}}" CommandParameter="{Binding}" />
+    </ContentPage.ToolbarItems>
+    
+    <ScrollView Background="Black">
+        <VerticalStackLayout>
+            <Image Source="{Binding  Image, Converter={StaticResource Base64ToImageSource}}" MaximumHeightRequest="300" />
+            
+            <StackLayout Orientation="Vertical" Margin="10">
+                
+                <StackLayout>
+                    <Label Text="{Binding Name}" Style="{StaticResource CategoryTitle}" HorizontalOptions="StartAndExpand"/>
+                    <Label Text="{Binding Price}" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+                
+                <Label Text="{Binding Description}" Margin="0,20,0,0" />
+
+            </StackLayout>
+        </VerticalStackLayout>
+        
+    </ScrollView>
+    
+</ContentPage>

@@ -55,7 +55,7 @@ public class ChampionsManagerVM : INotifyPropertyChanged
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
-    private readonly IDataManager dataManager;
+    public readonly IDataManager dataManager;
 
     public ChampionsManagerVM(IDataManager dataManager)
     {
@@ -130,5 +130,11 @@ public class ChampionsManagerVM : INotifyPropertyChanged
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public void AddSkin(EditableSkinVM editableSkinVM)
+    {
+        var skin = editableSkinVM.ToModel();
+        dataManager.SkinsMgr.AddItem(skin);
     }
 }

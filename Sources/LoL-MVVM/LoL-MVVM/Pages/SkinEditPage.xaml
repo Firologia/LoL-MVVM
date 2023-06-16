@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:LoL_MVVM.ViewModel"
+             xmlns:edition="clr-namespace:LoL_MVVM.Components.Edition"
+             x:Class="LoL_MVVM.Pages.SkinEditPage"
+             x:DataType="viewModel:SkinEditVM">
+    <ContentPage.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="TextColor" Value="#b29d65" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Annuler" Command="{Binding CancelCommand}" />
+        <ToolbarItem Text="Valider" Command="{Binding SubmitCommand}" />
+
+    </ContentPage.ToolbarItems>
+    
+    <ScrollView BackgroundColor="Black">
+        <Grid ColumnDefinitions="1*,3*" RowDefinitions="auto,auto,auto" RowSpacing="20">
+            
+            <!-- Name Row 0-->
+            <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Grid.Row="0" Grid.Column="0"/>
+            <edition:ReadOnlyTextAreaView Grid.Row="0" Grid.Column="1" TextValue="{Binding EditableSkinVM.Name}" />
+            
+            <!-- Icone Row 1-->
+            
+        </Grid>
+    </ScrollView>
+    
+</ContentPage>

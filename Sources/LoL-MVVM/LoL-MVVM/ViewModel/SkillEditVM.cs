@@ -1,7 +1,5 @@
 using System.Windows.Input;
-using Model;
 using ViewModel;
-using ViewModel.Enums;
 
 namespace LoL_MVVM.ViewModel;
 
@@ -37,11 +35,7 @@ public class SkillEditVM
     private void SubmitCommandMethod(object execute)
     {
         var oldSkill = skillVM;
-        skillVM = new SkillVM(new Skill(
-            EditableSkillVM.Name,
-            EditableSkillVM.Type.ToModel(),
-            EditableSkillVM.Description
-        ));
+        skillVM = new SkillVM(EditableSkillVM);
         editVM.AddSkill(oldSkill, skillVM);
         CloseEdition();
     }
