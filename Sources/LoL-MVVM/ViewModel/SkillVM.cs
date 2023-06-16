@@ -5,35 +5,32 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Custom_Toolkit_MVVM;
 using Model;
+using ViewModel.Enums;
 
 namespace ViewModel;
-public class SkillVM : INotifyPropertyChanged
+public class SkillVM : GenericClassVM<Skill>
     {
-        private Skill model;
         public string Name => model.Name;
+
+        public SkillTypeVM Type => (SkillTypeVM) model.Type;
 
         public string Description
         {
             get => model.Description;
-            set
-            {
-                if(model.Description.Equals(value)) return;
-                model.Description = value;
-                OnPropertyChanged();
+            set => SetModelPropertyChanged(model.Description, value, EqualityComparer<string>.Default, model, (skill, s) => { skill.Description = s; });
             }
-        }
-        public string Type => model.Type.ToString();
 
-        public SkillVM(Model.Skill model)
+        public SkillVM(Skill model) : base(model)
         {
-            this.model = model;
         }
+        
+        public bool Equals(SkillVM? other)
+            => Name.Equals(other?.Name) && Type == other.Type;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public override int GetHashCode()
+            => Name.GetHashCode() % 281;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-}
+        
+    }

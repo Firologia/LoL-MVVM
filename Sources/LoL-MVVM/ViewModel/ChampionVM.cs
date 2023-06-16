@@ -97,6 +97,21 @@ namespace ViewModel
         {
             characteristics.Clear();
         }
+        /// <summary>
+        /// We know that this function is dirty but it's the only way to clear the skills : )
+        /// </summary>
+        public void ClearSkills()
+        {
+            int count = model.Skills.Count;
+            for (int i = 0; i < count; i++)
+            {
+                model.RemoveSkill(model.Skills.First());
+            }
+        }
 
+        public void AddSkill(SkillVM skill)
+        {
+            model.AddSkill(new Skill(skill.Name, skill.Type.ToModel(), skill.Description));
+        }
     }
 }

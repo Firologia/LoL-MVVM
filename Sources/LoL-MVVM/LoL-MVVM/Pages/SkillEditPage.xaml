@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:edition="clr-namespace:LoL_MVVM.Components.Edition"
+             xmlns:viewModel="clr-namespace:LoL_MVVM.ViewModel"
+             xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
+             xmlns:converters="clr-namespace:LoL_MVVM.Converters"
+             x:Class="LoL_MVVM.Pages.SkillEditPage"
+             x:DataType="viewModel:SkillEditVM">
+    
+    <ContentPage.Resources>
+        <converters:EnumToValuesConverter x:Key="EnumToValuesConverter" x:TypeArguments="enums:SkillTypeVM"/>
+
+        
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="TextColor" Value="#b29d65" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Annuler" Command="{Binding CancelCommand}" />
+        <ToolbarItem Text="Valider" Command="{Binding SubmitCommand}" />
+
+    </ContentPage.ToolbarItems>
+    
+    <ScrollView BackgroundColor="Black">
+        
+        <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="1*,2*">
+            
+            <!-- Row 0 -->
+            <Label Text="Nom :" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <edition:TextAreaView TextValue="{Binding EditableSkillVM.Name}"
+                                  Grid.Row="0" Grid.Column="1"/>
+            
+            <!-- Row 1 -->
+            <Label Text="Type"  Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Picker  Grid.Row="1" Grid.Column="1" 
+                    ItemsSource="{Binding Source={x:Null}, Converter={StaticResource EnumToValuesConverter}, ConverterParameter='Unknown'}"
+                    SelectedItem="{Binding EditableSkillVM.Type}"/>
+            
+            <!-- Row 2 -->
+            <Label Text="Description :" Grid.Row="2" Grid.Column="0" VerticalTextAlignment="Center" />
+            <edition:TextAreaView TextValue="{Binding EditableSkillVM.Description}"
+                                  Grid.Row="2" Grid.Column="1"/>
+            
+        </Grid>
+        
+    </ScrollView>
+    
+</ContentPage>

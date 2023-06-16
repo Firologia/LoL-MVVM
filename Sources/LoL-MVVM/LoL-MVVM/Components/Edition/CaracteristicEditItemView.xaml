@@ -12,10 +12,10 @@
                 <RoundRectangle  CornerRadius="10,10,0,10"/>
             </Border.StrokeShape>
 
-            <StackLayout Margin="10,0,0,0" Orientation="Horizontal">
+            <StackLayout Margin="10,0,10,0" Orientation="Horizontal">
 
-                <Editor Text="{Binding Name, Source={x:Reference View}, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                <Editor Text="{Binding Value, Source={x:Reference View}, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End"/>
+                <Label Text="{Binding Name, Source={x:Reference View}}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center"/>
+                <Label Text="{Binding Value, Source={x:Reference View}}" TextColor="Black" VerticalOptions="Center" HorizontalOptions="EndAndExpand" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
 
             </StackLayout>
 

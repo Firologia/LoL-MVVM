@@ -10,7 +10,7 @@ public partial class CaracteristicEditItemView : ContentView
     }
 
     public static readonly BindableProperty NameProperty =
-        BindableProperty.Create(nameof(Name), typeof(string), typeof(ReadOnlyTextAreaView), null, BindingMode.TwoWay);
+        BindableProperty.Create(nameof(Name), typeof(string), typeof(ReadOnlyTextAreaView));
 
     public int Value
     {
@@ -19,7 +19,7 @@ public partial class CaracteristicEditItemView : ContentView
     }
 
     public static readonly BindableProperty ValueProperty =
-        BindableProperty.Create(nameof(Value), typeof(int), typeof(ReadOnlyTextAreaView),0,BindingMode.TwoWay);
+        BindableProperty.Create(nameof(Value), typeof(int), typeof(ReadOnlyTextAreaView));
 
 
     public CaracteristicEditItemView()

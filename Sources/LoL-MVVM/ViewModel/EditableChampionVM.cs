@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Custom_Toolkit_MVVM;
 using ViewModel.Enums;
 using ViewModel.Utils;
@@ -42,6 +43,10 @@ public class EditableChampionVM : CustomObservableObject
     private string largeImage;
 
     public ObservableDictionary<string, int> Characteristics { get; set; } = new();
+    
+    public ObservableCollection<SkillVM> Skills { get; set; } = new();
+    
+    public ObservableCollection<SkinVM> Skins { get; set; } = new();
 
     public void AddCharacteristic(string key, int value)
     {

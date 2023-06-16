@@ -6,12 +6,16 @@
              xmlns:vmapplicative="clr-namespace:LoL_MVVM.ViewModel"
              xmlns:enums="clr-namespace:ViewModel.Enums;assembly=ViewModel"
              xmlns:edition="clr-namespace:LoL_MVVM.Components.Edition"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="LoL_MVVM.Pages.ChampionEditPage"
              Title="ChampionEditPage">
 
     <ContentPage.Resources>
         <converters:EnumToValuesConverter x:Key="EnumToValuesConverter" x:TypeArguments="enums:ChampionClassVM"/>
         <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
+        <ResourceDictionary>
+            <toolkit:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter"/>
+        </ResourceDictionary>
 
         <Style x:Key="PageTitle" TargetType="{x:Type Label}" >
             <Setter Property="TextColor" Value="#b29d65" />
@@ -29,10 +33,10 @@
 
     </ContentPage.ToolbarItems>
         
-            <ScrollView>
-                <VerticalStackLayout Grid.Row="1">
+            <ScrollView BackgroundColor="Black">
+                <VerticalStackLayout>
 
-                <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto, auto" RowSpacing="20">
+                <Grid ColumnDefinitions="2*,7*" RowDefinitions="auto,auto,auto,auto,auto, auto, auto, auto, auto" RowSpacing="20">
   
                     <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                        Grid.Row="0" Grid.Column="0"/>
@@ -109,15 +113,36 @@
 
                     </Border>
 
-                    <HorizontalStackLayout Grid.Row="6" Grid.Column="1">
+                    <HorizontalStackLayout Grid.Row="6" Grid.Column="1" VerticalOptions="FillAndExpand">
 
-                        <edition:TextAreaView TextValue="{Binding CharacteristicKeyToAdd, Mode=TwoWay}" Hint="Caractéristiques"/>
-                        <edition:TextAreaView TextValue="{Binding CharacteristicValueToAdd, Mode=TwoWay}"/>
+                        <edition:TextAreaView TextValue="{Binding CharacteristicKeyToAdd, Mode=TwoWay}" Hint="Caractéristiques" WidthRequest="125"/>
+                        <edition:TextAreaView TextValue="{Binding CharacteristicValueToAdd, Mode=TwoWay}" WidthRequest="75"/>
                         <Button Text="Ajouter" Command="{Binding AddCharacteristicCommand}"/>
                     </HorizontalStackLayout>
                 
-                
-                
+                    <Label Text="Compétences" Grid.Row="7" Grid.Column="0" />
+                    
+                    <Border Grid.Row="7" Grid.Column="1" BackgroundColor="Transparent">
+                        <ListView RowHeight="40" ItemsSource="{ Binding EditableChampionVM.Skills}" SelectionMode="None">
+                            <ListView.Behaviors>
+                                <toolkit:EventToCommandBehavior EventName="ItemTapped" Command="{Binding EditSkillCommand}" EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>
+                            </ListView.Behaviors>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="10,0" Orientation="Horizontal">
+                                            <Label Text="{Binding Name}" FontSize="18" HorizontalOptions="Start" VerticalTextAlignment="Center" />
+                                            <Border WidthRequest="60" HeightRequest="20" HorizontalOptions="EndAndExpand">
+                                                <Label Text="{Binding Type}" FontSize="12" HorizontalTextAlignment="Center"  VerticalTextAlignment="Center"/>
+                                            </Border>
+                                            
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
+                    <Button Grid.Row="8" Grid.Column="1" Text="Add" Command="{Binding AddSkillCommand}"/>
                 
                 </Grid>
                 </VerticalStackLayout>

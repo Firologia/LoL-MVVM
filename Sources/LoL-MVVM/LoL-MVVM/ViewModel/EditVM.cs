@@ -21,6 +21,9 @@ public class EditVM
 
     public ICommand AddCharacteristicCommand { get; }
     
+    public ICommand EditSkillCommand { get; }
+    public ICommand AddSkillCommand { get; }
+    
     //Principals commands
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
@@ -35,7 +38,9 @@ public class EditVM
             ChampionClass = championVM.Class,
             Icon = championVM.Icon,
             LargeImage = championVM.LargeImage,
-            Characteristics = championVM.Characteristics.ToObservableDictionary()
+            Characteristics = championVM.Characteristics.ToObservableDictionary(),
+            Skills = championVM.Skills.ToObservableCollection(),
+            Skins = championVM.Skins.ToObservableCollection()
         };
         
         EditIconCommand = new Command(async execute =>
@@ -58,6 +63,10 @@ public class EditVM
                 EditableChampionVM.AddCharacteristic(CharacteristicKeyToAdd, CharacteristicValueToAdd);
             });
 
+        EditSkillCommand = new Command<SkillVM>(ToEditSkillPage);
+        AddSkillCommand = new Command(ToAddSkillPage);
+
+
         SubmitCommand = new Command(
         execute =>
             {
@@ -72,6 +81,14 @@ public class EditVM
                     championVM.AddCharacteristic(keyValuePair.Key, keyValuePair.Value);
 
                 }
+
+                championVM.ClearSkills();
+                foreach (var skill in EditableChampionVM.Skills)
+                {
+                    this.championVM.AddSkill(skill);
+                }
+                
+                
                 //The champion is added if it doesn't exist in the list
                 applicationVM.ChampionsManagerVM.AddChampion(championVM);
                 //We remove the page from the navigation stack
@@ -120,6 +137,29 @@ public class EditVM
 
         if(result != null) return await result.ToBase64();
         return null;
+    }
+
+    public void ToEditSkillPage(SkillVM skillVM)
+    {
+        var skillEditVM = new SkillEditVM(this, skillVM);
+        ApplicationVM.Navigation.PushAsync(new SkillEditPage(skillEditVM));
+    }
+
+    public void ToAddSkillPage()
+    {
+        ApplicationVM.Navigation.PushAsync(new SkillEditPage(new SkillEditVM(this)));
+    }
+    
+    public void AddSkill(SkillVM oldSkill,SkillVM skillVM)
+    {
+        if(oldSkill is null) EditableChampionVM.Skills.Add(skillVM);
+        else UpdateSkill(oldSkill,skillVM);
+    }
+
+    public void UpdateSkill(SkillVM oldSkill,SkillVM skillVM)
+    {
+        var index = EditableChampionVM.Skills.IndexOf(oldSkill);
+        if(index != -1) EditableChampionVM.Skills[index] = skillVM;
     }
 
 
