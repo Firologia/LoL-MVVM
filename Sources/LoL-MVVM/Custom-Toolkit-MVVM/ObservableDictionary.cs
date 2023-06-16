@@ -98,17 +98,21 @@ where TKey : notnull
         get => base[key];
         set
         {
-            var result = base.TryGetValue(key, out var oldValue);
+            if (base.TryGetValue(key, out var oldValue) && EqualityComparer<TValue>.Default.Equals(oldValue, value))
+                return;
+
             base[key] = value;
-            if (result)
+
+            if (base.ContainsKey(key))
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, new KeyValuePair<TKey, TValue>(key, value), new KeyValuePair<TKey, TValue>(key, oldValue)));
+                OnPropertyChanged(nameof(Keys));
                 OnPropertyChanged(nameof(Values));
+                OnPropertyChanged(nameof(Count));
             }
             else
             {
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
-
                 OnPropertyChanged(nameof(Keys));
                 OnPropertyChanged(nameof(Values));
                 OnPropertyChanged(nameof(Count));

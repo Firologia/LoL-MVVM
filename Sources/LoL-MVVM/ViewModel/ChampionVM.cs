@@ -89,16 +89,22 @@ namespace ViewModel
 
         public void AddCharacteristic(string key, int value)
         {
-            if (characteristics.ContainsKey(key)) characteristics.Remove(key);
-            characteristics.Add(key, value);
+            model.AddCharacteristics(new Tuple<string, int>(key, value));
         }
 
+        /// <summary>
+        /// We know that this function is dirty but it's the only way to clear the characteristics... A better solution surely exist : )
+        /// </summary>
         public void ClearCharacteristics()
         {
-            characteristics.Clear();
+            int count = model.Characteristics.Count;
+            for (int i = 0; i < count; i++)
+            {
+                model.RemoveCharacteristics(model.Characteristics.First().Key);
+            }
         }
         /// <summary>
-        /// We know that this function is dirty but it's the only way to clear the skills : )
+        /// We know that this function is dirty but it's the only way to clear the skills... A better solution surely exist : )
         /// </summary>
         public void ClearSkills()
         {
@@ -107,6 +113,11 @@ namespace ViewModel
             {
                 model.RemoveSkill(model.Skills.First());
             }
+        }
+        
+        public void RemoveSkill(SkillVM skill)
+        {
+            model.RemoveSkill(new Skill(skill.Name, skill.Type.ToModel(), skill.Description));
         }
 
         public void AddSkill(SkillVM skill)

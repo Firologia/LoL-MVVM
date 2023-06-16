@@ -5,6 +5,7 @@
              xmlns:converters="clr-namespace:LoL_MVVM.Converters"
              xmlns:components="clr-namespace:LoL_MVVM.Components"
              xmlns:viewmodel="clr-namespace:ViewModel;assembly=ViewModel"
+             x:Name="Page"
              Title="ChampionDetailsPage">
 
     <ContentPage.Resources>
@@ -22,7 +23,7 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Modifier" />
+        <ToolbarItem Text="Modifier" Command="{Binding ApplicationVM.EditCommand, Source={x:Reference Page}}" CommandParameter="{Binding}" />
     </ContentPage.ToolbarItems>
 
     <ScrollView Background="Black" Orientation="Vertical">

@@ -1,5 +1,6 @@
 using System.Windows.Input;
 using CommunityToolkit.Maui.Core.Extensions;
+using Custom_Toolkit_MVVM;
 using LoL_MVVM.Pages;
 using LoL_MVVM.Utils;
 using Model;
@@ -7,14 +8,24 @@ using ViewModel;
 
 namespace LoL_MVVM.ViewModel;
 
-public class EditVM
+public class EditVM : CustomObservableObject
 {
     private ApplicationVM applicationVM => (Application.Current as App).ApplicationVM;
     public EditableChampionVM EditableChampionVM { get; set; }
     private ChampionVM championVM;
 
-    public string CharacteristicKeyToAdd { get; set; }
-    public int CharacteristicValueToAdd { get; set; } = 0;
+    public string EditedKey
+    {
+        get => editedKey;
+        set => SetPropertyChanged(ref editedKey, value, EqualityComparer<string>.Default);
+    }
+    private string editedKey = "";
+    public int EditedValue
+    {
+        get => editedValue;
+        set => SetPropertyChanged(ref editedValue, value, EqualityComparer<int>.Default);
+    }
+    private int editedValue = 0;
     
     public ICommand EditIconCommand { get; }
     public ICommand EditImageCommand { get; }
@@ -60,7 +71,8 @@ public class EditVM
         AddCharacteristicCommand = new Command(
             execute =>
             {
-                EditableChampionVM.AddCharacteristic(CharacteristicKeyToAdd, CharacteristicValueToAdd);
+                if(EditableChampionVM.Characteristics.ContainsKey(editedKey)) EditableChampionVM.UpdateCharacteristic(new Tuple<string, int>(editedKey, editedValue));
+                else EditableChampionVM.AddCharacteristic(new Tuple<string, int>(editedKey, editedValue));
             });
 
         EditSkillCommand = new Command<SkillVM>(ToEditSkillPage);
@@ -76,14 +88,14 @@ public class EditVM
                 championVM.LargeImage = EditableChampionVM.LargeImage;
 
                 championVM.ClearCharacteristics();
-                foreach (var keyValuePair in EditableChampionVM.Characteristics)
+                foreach (var keyValuePair in EditableChampionVM.Characteristics.Reverse())
                 {
                     championVM.AddCharacteristic(keyValuePair.Key, keyValuePair.Value);
 
                 }
 
                 championVM.ClearSkills();
-                foreach (var skill in EditableChampionVM.Skills)
+                foreach (var skill in EditableChampionVM.Skills.Reverse())
                 {
                     this.championVM.AddSkill(skill);
                 }

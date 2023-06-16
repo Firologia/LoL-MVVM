@@ -43,8 +43,14 @@ public class SkillEditVM
             EditableSkillVM.Description
         ));
         editVM.AddSkill(oldSkill, skillVM);
+        CloseEdition();
     }
     private void CancelCommandMethod(object execute)
+    {
+        CloseEdition();
+    }
+
+    private void CloseEdition()
     {
         ApplicationVM.Navigation.RemovePage(ApplicationVM.Navigation.NavigationStack.Last());
     }

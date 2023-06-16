@@ -48,9 +48,13 @@ public class EditableChampionVM : CustomObservableObject
     
     public ObservableCollection<SkinVM> Skins { get; set; } = new();
 
-    public void AddCharacteristic(string key, int value)
+    public void AddCharacteristic(Tuple<string, int> characteristic)
     {
-        Characteristics.Remove(key);
-        Characteristics.Add(key, value);
+        Characteristics.Add(characteristic.Item1, characteristic.Item2);
+    }
+    
+    public void UpdateCharacteristic(Tuple<string, int> characteristic)
+    {
+        Characteristics[characteristic.Item1] = characteristic.Item2;
     }
 }

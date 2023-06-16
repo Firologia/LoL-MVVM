@@ -115,8 +115,8 @@
 
                     <HorizontalStackLayout Grid.Row="6" Grid.Column="1" VerticalOptions="FillAndExpand">
 
-                        <edition:TextAreaView TextValue="{Binding CharacteristicKeyToAdd, Mode=TwoWay}" Hint="Caractéristiques" WidthRequest="125"/>
-                        <edition:TextAreaView TextValue="{Binding CharacteristicValueToAdd, Mode=TwoWay}" WidthRequest="75"/>
+                        <edition:TextAreaView TextValue="{Binding EditedKey}" Hint="Caractéristiques" WidthRequest="125"/>
+                        <edition:TextAreaView TextValue="{Binding EditedValue}" WidthRequest="75"/>
                         <Button Text="Ajouter" Command="{Binding AddCharacteristicCommand}"/>
                     </HorizontalStackLayout>
                 
