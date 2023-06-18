@@ -132,9 +132,16 @@ public class ChampionsManagerVM : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public void AddSkin(EditableSkinVM editableSkinVM)
+    public void AddSkin(SkinVM skinVM)
     {
-        var skin = editableSkinVM.ToModel();
+        var skin = skinVM.Model;
         dataManager.SkinsMgr.AddItem(skin);
+    }
+
+    public async void UpdateSkin(SkinVM oldSkin, SkinVM newSkin)
+    {
+        var oldSkinModel = oldSkin.Model;
+        var newSkinModel = newSkin.Model;
+        var skin = await dataManager.SkinsMgr.UpdateItem(oldSkinModel, newSkinModel);
     }
 }

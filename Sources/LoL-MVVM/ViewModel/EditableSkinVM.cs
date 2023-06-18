@@ -1,16 +1,18 @@
+
 using Model;
 using ViewModel.Enums;
+using ViewModel.Utils;
 
 namespace ViewModel;
 
 public class EditableSkinVM
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
     public ChampionVM ChampionVM { get; set; }
-    public string Description { get; set; }
-    public string Icon { get; set; }
-    public string Image { get; set; }
-    public float Price { get; set; }
+    public string Description { get; set; } = "";
+    public string Icon { get; set; } = Base64Constants.DEFAULT_ICON;
+    public string Image { get; set; } = Base64Constants.DEFAULT_IMAGE;
+    public float Price { get; set; } = 0;
     
     public Skin ToModel()
     {

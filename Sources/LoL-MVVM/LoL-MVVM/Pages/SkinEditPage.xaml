@@ -4,9 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:LoL_MVVM.ViewModel"
              xmlns:edition="clr-namespace:LoL_MVVM.Components.Edition"
+             xmlns:converters="clr-namespace:LoL_MVVM.Converters"
              x:Class="LoL_MVVM.Pages.SkinEditPage"
              x:DataType="viewModel:SkinEditVM">
     <ContentPage.Resources>
+        <converters:Base64ToImageSource x:Key="Base64ToImageSource" />
         <Style TargetType="{x:Type Label}">
             <Setter Property="TextColor" Value="#b29d65" />
         </Style>
@@ -19,14 +21,37 @@
     </ContentPage.ToolbarItems>
     
     <ScrollView BackgroundColor="Black">
-        <Grid ColumnDefinitions="1*,3*" RowDefinitions="auto,auto,auto" RowSpacing="20">
+        <Grid ColumnDefinitions="1*,3*" RowDefinitions="auto,auto,auto, auto, auto" RowSpacing="20">
             
             <!-- Name Row 0-->
             <Label Text="Nom :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                    Grid.Row="0" Grid.Column="0"/>
-            <edition:ReadOnlyTextAreaView Grid.Row="0" Grid.Column="1" TextValue="{Binding EditableSkinVM.Name}" />
+            <edition:TextAreaView Grid.Row="0" Grid.Column="1" TextValue="{Binding EditableSkinVM.Name}" />
             
             <!-- Icone Row 1-->
+            <Label Text="Icone :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Grid.Row="1" Grid.Column="0"/>
+            <Border  Grid.Row="1" Grid.Column="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start">
+                <ImageButton Source="{Binding EditableSkinVM.Icon, Converter={StaticResource Base64ToImageSource}}" Command="{Binding PickIconCommand}" HeightRequest="50" WidthRequest="50" />
+            </Border>
+            
+            <!-- Image Row 2 -->
+            <Label Text="Image" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Grid.Row="2" Grid.Column="0"/>
+            <Border  Grid.Row="2" Grid.Column="1" HeightRequest="150" WidthRequest="300" HorizontalOptions="Start">
+                <ImageButton Source="{Binding EditableSkinVM.Image, Converter={StaticResource Base64ToImageSource}}" Command="{Binding PickImageCommand}" HeightRequest="150" WidthRequest="300" />
+            </Border>
+            
+            
+            <!-- Prix Row 3 -->
+            <Label Text="Prix :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Grid.Row="3" Grid.Column="0"/>
+            <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableSkinVM.Price}"/>
+            
+            <!-- Description Row 4 -->
+            <Label Text="Description :" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Grid.Row="4" Grid.Column="0"/>
+            <edition:TextAreaView Grid.Row="4" Grid.Column="1" TextValue="{Binding EditableSkinVM.Description}"/>
             
         </Grid>
     </ScrollView>

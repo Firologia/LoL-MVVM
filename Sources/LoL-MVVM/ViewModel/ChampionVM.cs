@@ -8,7 +8,7 @@ namespace ViewModel
     public class ChampionVM : GenericClassVM<Champion>
     {
 
-        internal new Champion Model => base.model;
+        internal Champion Model => model;
         public string Name => model.Name;
         public string Bio 
         {

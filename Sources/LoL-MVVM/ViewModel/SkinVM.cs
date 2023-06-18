@@ -8,7 +8,10 @@ namespace ViewModel;
 public class SkinVM : GenericClassVM<Skin>
 {
 
+    internal Skin Model => model;
     public string Name => model.Name;
+
+    public ChampionVM ChampionVM => new ChampionVM(model.Champion);
 
     public string Description
     {
@@ -37,6 +40,11 @@ public class SkinVM : GenericClassVM<Skin>
     public SkinVM(Skin model) : base(model)
     {
     }
-    public Skin GetModel() => model;
+
+    public SkinVM(EditableSkinVM editableSkinVM) : base(new Skin(editableSkinVM.Name, editableSkinVM.ChampionVM.Model,
+        editableSkinVM.Price, editableSkinVM.Icon, editableSkinVM.Image, editableSkinVM.Description))
+    {
+        
+    }
 
 }
