@@ -47,15 +47,15 @@ namespace ViewModel
         private readonly ObservableDictionary<string, int> characteristics = new();
 
         public ReadOnlyObservableCollection<SkillVM> Skills { get; private init; }
-        private ObservableCollection<SkillVM> _skills = new();
+        private ObservableCollection<SkillVM> skills = new();
 
         public ReadOnlyObservableCollection<SkinVM> Skins { get; private init; }
-        private ObservableCollection<SkinVM> _skins = new();
+        private ObservableCollection<SkinVM> skins = new();
 
         public ChampionVM(Champion model) : base(model)
         {
-            Skills = new(_skills);
-            Skins = new(_skins);
+            Skills = new(skills);
+            Skins = new(skins);
 
             foreach (var characteristic in model.Characteristics)
             {
@@ -66,14 +66,14 @@ namespace ViewModel
 
             foreach (var skill in model.Skills)
             {
-                _skills.Add(new SkillVM(skill));
+                skills.Add(new SkillVM(skill));
             }
 
             
 
             foreach (var skin in model.Skins)
             {
-                _skins.Add(new SkinVM(skin));
+                skins.Add(new SkinVM(skin));
             }
 
             
@@ -83,8 +83,8 @@ namespace ViewModel
         public ChampionVM() : base(new Champion("", ChampionClass.Unknown))
         {
             //Characteristics = new(_characteristics);
-            Skills = new(_skills);
-            Skins = new(_skins);
+            Skills = new(skills);
+            Skins = new(skins);
         }
 
         public void AddCharacteristic(string key, int value)

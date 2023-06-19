@@ -93,7 +93,7 @@
                             <ViewCell>
                                 <SwipeView>
                                     <SwipeView.RightItems>
-                                        <SwipeItem Text="Delete" BackgroundColor="Red"/>
+                                        <SwipeItem Text="Delete" CommandParameter="{Binding}" Command="{Binding ApplicationVM.DeleteSkinCommand, Source={x:Reference Page}}" BackgroundColor="Red"/>
                                         <SwipeItem Text="Modifier" CommandParameter="{Binding}" Command="{Binding ApplicationVM.EditSkinCommand, Source={x:Reference Page}}" BackgroundColor="{StaticResource Gray400}"/>
                                     </SwipeView.RightItems>
                                     <components:SkinItemView />

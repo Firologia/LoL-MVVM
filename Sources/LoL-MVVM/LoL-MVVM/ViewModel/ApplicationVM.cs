@@ -24,6 +24,8 @@ namespace LoL_MVVM.ViewModel
 		public ICommand AddSkinCommand { get; }
 		public ICommand CreateCommand { get; }
 
+		public ICommand DeleteSkinCommand { get; }
+
 		public ApplicationVM(ChampionsManagerVM championsManagerVM)
 		{
 			//Set the championManagerVM
@@ -38,6 +40,8 @@ namespace LoL_MVVM.ViewModel
 			SkinDetailsCommand = new Command<SkinVM>(GoToSkinDetailsPage);
 			EditSkinCommand = new Command<SkinVM>(EditSkinCommandMethod);
 			AddSkinCommand = new Command<ChampionVM>(AddSkinCommandMethod);
+
+			DeleteSkinCommand = new Command<SkinVM>(DeleteSkinCommandMethod);
 
 		}
 		
@@ -83,6 +87,11 @@ namespace LoL_MVVM.ViewModel
 	        await Navigation.PushAsync(new SkinEditPage(new SkinEditVM(skinVM)));
         }
 
+		private async void DeleteSkinCommandMethod(SkinVM skinVM)
+		{
+			if (skinVM == null) return;
+			await ChampionsManagerVM.DeleteSkin(skinVM);
+		}
     }
 }
 

@@ -27,7 +27,7 @@
     <VerticalStackLayout>
 
         <ListView ItemsSource="{Binding ChampionsManagerVM.Champions}" SelectionMode="None"
-                  Margin="5,10,0,0" HeightRequest="500"  
+                  Margin="5,10,0,0" HeightRequest="500"  BackgroundColor="White" 
                   >
             <ListView.Behaviors>
                 <toolkit:EventToCommandBehavior EventName="ItemTapped" Command="{Binding ChampionDetailsCommand}" EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}"/>

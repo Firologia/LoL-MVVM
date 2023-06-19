@@ -59,9 +59,9 @@ public class SkinEditVM
     /// <param name="execute"></param>
     private void SubmitCommandMethod(object execute)
     {
-        var skinToAdd = new SkinVM(EditableSkinVM);
-        if(skinVM == null) AddSkin(skinToAdd);
-        else UpdateSkin(skinVM, skinToAdd);
+        var editedSkin = new SkinVM(EditableSkinVM);
+        if(skinVM == null) AddSkin(editedSkin);
+        else UpdateSkin(skinVM, editedSkin);
         
         CloseEdition();
     }

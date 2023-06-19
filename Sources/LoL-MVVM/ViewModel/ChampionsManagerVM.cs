@@ -136,6 +136,7 @@ public class ChampionsManagerVM : INotifyPropertyChanged
     {
         var skin = skinVM.Model;
         dataManager.SkinsMgr.AddItem(skin);
+        LoadChampions();
     }
 
     public async void UpdateSkin(SkinVM oldSkin, SkinVM newSkin)
@@ -143,5 +144,12 @@ public class ChampionsManagerVM : INotifyPropertyChanged
         var oldSkinModel = oldSkin.Model;
         var newSkinModel = newSkin.Model;
         var skin = await dataManager.SkinsMgr.UpdateItem(oldSkinModel, newSkinModel);
+        LoadChampions();
+    }
+
+    public async Task DeleteSkin(SkinVM skinVM)
+    {
+        await dataManager.SkinsMgr.DeleteItem(skinVM.Model);
+        LoadChampions();
     }
 }
