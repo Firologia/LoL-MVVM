@@ -5,6 +5,10 @@
     - [Avantages du MVVM](#avantages-du-mvvm)
     - [Schéma du MVVM (en .NET MAUI)](#schéma-du-mvvm-en-net-maui)
 2. [Mon MVVM (Custom Toolkit)](#mvvm-maison-custom-toolkit)
+    - [Description](#description-1)
+    - [Schéma](#schéma)
+    - [Code](#code)
+    - [Exemple](#exemple)
 
 # Qu'est ce que MVVM ?
 
@@ -124,7 +128,7 @@ class ModelVM extends GenericClassVM {
 
 ```csharp
 
-	public class CustomObservableObject : INotifyPropertyChanged
+	public abstract class CustomObservableObject : INotifyPropertyChanged
 	{
         public event PropertyChangedEventHandler? PropertyChanged;
 

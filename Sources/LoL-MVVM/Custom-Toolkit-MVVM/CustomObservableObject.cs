@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Custom_Toolkit_MVVM
 {
-	public class CustomObservableObject : INotifyPropertyChanged
+	public abstract class CustomObservableObject : INotifyPropertyChanged
 	{
         public event PropertyChangedEventHandler? PropertyChanged;
 
