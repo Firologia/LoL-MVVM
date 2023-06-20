@@ -11,11 +11,11 @@ namespace Custom_Toolkit_MVVM
 
         protected T model;
 
-		public GenericClassVM(T model)
+        protected GenericClassVM(T model)
 		{
 			this.model = model;
 		}
 
-    }
+	}
 }
 

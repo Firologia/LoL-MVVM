@@ -10,8 +10,8 @@ namespace LoL_MVVM.Pages;
 
 public partial class SkinDetailsPage : ContentPage
 {
-    ApplicationVM ApplicationVM = (Application.Current as App).ApplicationVM;
-    public SkinVM SkinVM { get; set; }
+    public ApplicationVM ApplicationVM { get;} = (Application.Current as App).ApplicationVM;
+    public SkinVM SkinVM { get; }
     
     public SkinDetailsPage(SkinVM skinVM)
     {
