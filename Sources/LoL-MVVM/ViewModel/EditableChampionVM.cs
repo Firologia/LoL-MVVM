@@ -93,4 +93,9 @@ public class EditableChampionVM : CustomObservableObject
         var index = skills.IndexOf(oldSkill);
         if(index != -1) skills[index] = newSkill;
     }
+
+    public void RemoveSkill(SkillVM skillVM)
+    {
+        skills.Remove(skillVM);
+    }
 }

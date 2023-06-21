@@ -12,13 +12,4 @@ public partial class ChampionListPage : ContentPage
         InitializeComponent();
         BindingContext = ApplicationVM;
     }
-
-    async void ListView_ItemTapped(System.Object sender, Microsoft.Maui.Controls.ItemTappedEventArgs e)
-    {
-        if(e.Item is ChampionVM championVM)
-        {
-            await Navigation.PushAsync(new ChampionDetailsPage(championVM));
-        }
-        
-    }
 }

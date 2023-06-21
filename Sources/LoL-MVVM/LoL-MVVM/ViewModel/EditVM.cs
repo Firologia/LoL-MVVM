@@ -34,6 +34,8 @@ public class EditVM : CustomObservableObject
     public ICommand EditSkillCommand { get; }
     public ICommand AddSkillCommand { get; }
     
+    public ICommand DeleteSkillCommand { get; }
+    
     //Principals commands
     public ICommand SubmitCommand { get; }
     public ICommand CancelCommand { get; }
@@ -66,6 +68,7 @@ public class EditVM : CustomObservableObject
             });
 
         EditSkillCommand = new Command<SkillVM>(ToEditSkillPage);
+        DeleteSkillCommand = new Command<SkillVM>(DeleteSkillCommandMethod);
         AddSkillCommand = new Command(ToAddSkillPage);
 
 
@@ -103,7 +106,6 @@ public class EditVM : CustomObservableObject
                 ApplicationVM.Navigation.RemovePage(ApplicationVM.Navigation.NavigationStack[^1]);
             });
     }
-    
 
 
 
@@ -127,6 +129,11 @@ public class EditVM : CustomObservableObject
     public void UpdateSkill(SkillVM oldSkill,SkillVM newSkill)
     {
         EditableChampionVM.UpdateSkill(oldSkill, newSkill);
+    }
+    
+    private void DeleteSkillCommandMethod(SkillVM obj)
+    {
+        EditableChampionVM.RemoveSkill(obj);
     }
 
 
