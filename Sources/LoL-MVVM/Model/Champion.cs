@@ -62,7 +62,7 @@ public class Champion : IEquatable<Champion>
     public ImmutableHashSet<Skill> Skills => skills.ToImmutableHashSet();
     private HashSet<Skill> skills = new HashSet<Skill>();
 
-    internal bool AddSkin(Skin skin)
+    public bool AddSkin(Skin skin)
     {
         if (skins.Contains(skin))
             return false;
@@ -70,7 +70,7 @@ public class Champion : IEquatable<Champion>
         return true;
     }
 
-    internal bool RemoveSkin(Skin skin)
+    public bool RemoveSkin(Skin skin)
         => skins.Remove(skin);
 
     public bool AddSkill(Skill skill)

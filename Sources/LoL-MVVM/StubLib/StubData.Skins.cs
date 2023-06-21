@@ -86,8 +86,20 @@ namespace StubLib
             public Task<Skin?> AddItem(Skin? item)
                 => parent.skins.AddItem(item);
 
-            public Task<bool> DeleteItem(Skin? item)
-                => parent.skins.DeleteItem(item);
+            public async Task<bool> DeleteItem(Skin? item)
+            {
+                if(item == null) return false;
+
+                var result = await parent.skins.DeleteItem(item);
+                if(result)
+                {
+                    foreach(var champion in parent.champions)
+                    {
+                        champion.RemoveSkin(item);
+                    }
+                }
+                return result;
+            }
 
             public Task<IEnumerable<Skin?>> GetItems(int index, int count, string? orderingPropertyName = null, bool descending = false)
                 => parent.skins.GetItemsWithFilterAndOrdering(

@@ -400,3 +400,5 @@ FodyWeavers.xsd
 
 
 Sources/LoL-MVVM/.idea/
+
+.DS_Store
