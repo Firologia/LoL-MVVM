@@ -54,32 +54,19 @@ namespace ViewModel
 
         public ChampionVM(Champion model) : base(model)
         {
+            characteristics = new ObservableDictionary<string, int>(model.Characteristics);
             Characteristics = new(characteristics);
+
+            skills = new ObservableCollection<SkillVM>(model.Skills.Select(skill => new SkillVM(skill)));
             Skills = new(skills);
+
+            skins = new ObservableCollection<SkinVM>(model.Skins.Select(skin => new SkinVM(skin)));
             Skins = new(skins);
-
-            foreach (var characteristic in model.Characteristics)
-            {
-                characteristics.Add(characteristic.Key, characteristic.Value);
-            }
-
-            foreach (var skill in model.Skills)
-            {
-                skills.Add(new SkillVM(skill));
-            }
-
-            foreach (var skin in model.Skins)
-            {
-                skins.Add(new SkinVM(skin));
-            }
-
-            
-
         }
 
         public ChampionVM() : base(new Champion("", ChampionClass.Unknown))
         {
-            //Characteristics = new(_characteristics);
+            Characteristics = new(characteristics);
             Skills = new(skills);
             Skins = new(skins);
         }
@@ -87,6 +74,7 @@ namespace ViewModel
         public void AddCharacteristic(string key, int value)
         {
             model.AddCharacteristics(new Tuple<string, int>(key, value));
+            characteristics.Add(key, value);
         }
 
         /// <summary>
@@ -94,32 +82,34 @@ namespace ViewModel
         /// </summary>
         public void ClearCharacteristics()
         {
-            int count = model.Characteristics.Count;
-            for (int i = 0; i < count; i++)
+            foreach (var kvp in characteristics)
             {
-                model.RemoveCharacteristics(model.Characteristics.First().Key);
+                model.RemoveCharacteristics(kvp.Key);
             }
+            characteristics.Clear();
         }
         /// <summary>
         /// We know that this function is dirty but it's the only way to clear the skills... A better solution surely exist : )
         /// </summary>
         public void ClearSkills()
         {
-            int count = model.Skills.Count;
-            for (int i = 0; i < count; i++)
+            foreach (var skill in Skills)
             {
-                model.RemoveSkill(model.Skills.First());
+                model.RemoveSkill(skill.Model);
             }
+            skills.Clear();
         }
         
         public void RemoveSkill(SkillVM skill)
         {
-            model.RemoveSkill(new Skill(skill.Name, skill.Type.ToModel(), skill.Description));
+            var result = model.RemoveSkill(skill.Model);
+            if(result) skills.Remove(skill);
         }
 
         public void AddSkill(SkillVM skill)
         {
-            model.AddSkill(new Skill(skill.Name, skill.Type.ToModel(), skill.Description));
+            var result =model.AddSkill(skill.Model);
+            if(result) skills.Add(skill);
         }
     }
 }
