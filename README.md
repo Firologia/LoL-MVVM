@@ -9,6 +9,7 @@
     - [Schéma](#schéma)
     - [Code](#code)
     - [Exemple](#exemple)
+3. [Fontionnalités](#fontionnalités)
 
 # Qu'est ce que MVVM ?
 
@@ -264,3 +265,35 @@ public class ModelVM : GenericClassVM<Model> {
 }
 
 ```
+
+# Fontionnalités
+
+
+
+| Intitulé | Fontionnelle | Partiellement fonctionnelle | Non Fonctionnelle | Non fait |
+| -------- | ------------ | --------------------------- | ----------------- | -------- |
+| Affichage collection champions | X | | | |
+| Pagination | X | | | |
+| Sélection d'un champion pour voir le détail | X | | | |
+| Gestion des caractéristiques | | X (pas de suppression) | | |
+| Gestion de la classe du champion | X | | | |
+| Modification d'un champion existant (depuis page champion et swipe de l'item) | X | | | |
+| Ajout d'un nouveau champion | X | | | |
+| Ajouter la gestion des skills | X | | | |
+| Ajouter la gestion des skins | | X (besoin de recharger la page pour affichage) | | |
+
+# Bugs connues
+
+`IOS` : la classe actuelle du champion n'est pas sélectionnée lors de son édition
+
+`Android` : les images de la liste ne corrrespondent pas forcément à celle du champion
+
+`Skins` bug lors de la modification d'un skin (il n'est pas supprimé).
+
+# Auteur
+
+- **Jordan Artzet**
+
+
+
+
