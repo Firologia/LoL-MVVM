@@ -36,7 +36,8 @@ public class SkillEditVM
     {
         var oldSkill = skillVM;
         skillVM = new SkillVM(EditableSkillVM);
-        editVM.AddSkill(oldSkill, skillVM);
+        if(oldSkill is null) editVM.AddSkill(skillVM);
+        else editVM.UpdateSkill(oldSkill, skillVM);
         CloseEdition();
     }
     private void CancelCommandMethod(object execute)

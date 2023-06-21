@@ -95,14 +95,12 @@
                 
                     <Border Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent">
 
-                        <ListView RowHeight="50" ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
+                        <ListView SeparatorVisibility="None" HorizontalOptions="Start" RowHeight="50" WidthRequest="300" ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
                             <ListView.ItemTemplate >
                                 <DataTemplate >
                                     <ViewCell>
-                                        <edition:CaracteristicEditItemView Name="{Binding Key, Mode=TwoWay}" Value="{Binding Value, Mode=TwoWay}" />
+                                        <edition:CaracteristicEditItemView Name="{Binding Key}" Value="{Binding Value}" />
                                     </ViewCell>
-                                    
-
                                 </DataTemplate>
                             </ListView.ItemTemplate>
 

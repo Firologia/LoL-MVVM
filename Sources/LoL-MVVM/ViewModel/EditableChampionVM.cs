@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Reflection.PortableExecutable;
 using Custom_Toolkit_MVVM;
 using ViewModel.Enums;
 using ViewModel.Utils;
@@ -12,14 +13,14 @@ public class EditableChampionVM : CustomObservableObject
         get => name;
         set => SetPropertyChanged(ref name, value, EqualityComparer<string>.Default);
     }
-    private string name;
+    private string name = "";
 
     public string Bio
     {
         get => bio;
         set => SetPropertyChanged(ref bio, value, EqualityComparer<string>.Default);
     }
-    private string bio;
+    private string bio = "";
 
     public ChampionClassVM ChampionClass
     {
@@ -33,28 +34,62 @@ public class EditableChampionVM : CustomObservableObject
         get => icon;
         set => SetPropertyChanged(ref icon, value, EqualityComparer<string>.Default);
     }
-    private string icon;
+    private string icon = "";
     
     public string LargeImage
     {
         get => largeImage;
         set => SetPropertyChanged(ref largeImage, value, EqualityComparer<string>.Default);
     }
-    private string largeImage;
+    private string largeImage = "";
 
-    public ObservableDictionary<string, int> Characteristics { get; set; } = new();
+    public ReadOnlyDictionary<string, int> Characteristics { get; }
+    private readonly ObservableDictionary<string, int> characteristics  = new();
     
-    public ObservableCollection<SkillVM> Skills { get; set; } = new();
+    public ReadOnlyObservableCollection<SkillVM> Skills { get; }
+    private readonly ObservableCollection<SkillVM> skills = new();
     
-    public ObservableCollection<SkinVM> Skins { get; set; } = new();
 
-    public void AddCharacteristic(Tuple<string, int> characteristic)
+    public EditableChampionVM(ChampionVM championVM)
     {
-        Characteristics.Add(characteristic.Item1, characteristic.Item2);
+        Name = championVM.Name;
+        Bio = championVM.Bio;
+        ChampionClass = championVM.Class;
+        Icon = championVM.Icon;
+        LargeImage = championVM.LargeImage;
+        Characteristics = new ReadOnlyDictionary<string, int>(characteristics);
+        Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
+        
+        
+        foreach (var c in championVM.Characteristics)
+        {
+            characteristics.Add(c.Key, c.Value);
+        }
+
+        foreach (var skill in championVM.Skills)
+        {
+            skills.Add(skill);
+        }
+    }
+
+    public void AddCharacteristic(string key, int value)
+    {
+        characteristics.Add(key, value);
     }
     
-    public void UpdateCharacteristic(Tuple<string, int> characteristic)
+    public void UpdateCharacteristic(string key, int value)
     {
-        Characteristics[characteristic.Item1] = characteristic.Item2;
+        characteristics[key] = value;
+    }
+
+    public void AddSkill(SkillVM skill)
+    {
+        skills.Add(skill);
+    }
+
+    public void UpdateSkill(SkillVM oldSkill, SkillVM newSkill)
+    {
+        var index = skills.IndexOf(oldSkill);
+        if(index != -1) skills[index] = newSkill;
     }
 }

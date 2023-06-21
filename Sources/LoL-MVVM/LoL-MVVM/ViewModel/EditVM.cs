@@ -41,18 +41,8 @@ public class EditVM : CustomObservableObject
     public EditVM(ChampionVM championVM)
     {
         this.championVM = championVM;
-        EditableChampionVM = new EditableChampionVM()
-        {
-            Name = championVM.Name,
-            Bio = championVM.Bio,
-            ChampionClass = championVM.Class,
-            Icon = championVM.Icon,
-            LargeImage = championVM.LargeImage,
-            Characteristics = championVM.Characteristics.ToObservableDictionary(),
-            Skills = championVM.Skills.ToObservableCollection(),
-            Skins = championVM.Skins.ToObservableCollection()
-        };
-        
+        EditableChampionVM = new EditableChampionVM(this.championVM);
+
         EditIconCommand = new Command(async execute =>
             {
                 var icon = await EditFilePicker.PickImage();
@@ -70,8 +60,9 @@ public class EditVM : CustomObservableObject
         AddCharacteristicCommand = new Command(
             execute =>
             {
-                if(EditableChampionVM.Characteristics.ContainsKey(editedKey)) EditableChampionVM.UpdateCharacteristic(new Tuple<string, int>(editedKey, editedValue));
-                else EditableChampionVM.AddCharacteristic(new Tuple<string, int>(editedKey, editedValue));
+                if(EditableChampionVM.Characteristics.ContainsKey(editedKey)) 
+                    EditableChampionVM.UpdateCharacteristic(editedKey, editedValue);
+                else EditableChampionVM.AddCharacteristic(editedKey, editedValue);
             });
 
         EditSkillCommand = new Command<SkillVM>(ToEditSkillPage);
@@ -128,16 +119,14 @@ public class EditVM : CustomObservableObject
         ApplicationVM.Navigation.PushAsync(new SkillEditPage(new SkillEditVM(this)));
     }
     
-    public void AddSkill(SkillVM oldSkill,SkillVM skillVM)
+    public void AddSkill(SkillVM newSkill)
     {
-        if(oldSkill is null) EditableChampionVM.Skills.Add(skillVM);
-        else UpdateSkill(oldSkill,skillVM);
+        EditableChampionVM.AddSkill(newSkill);
     }
 
-    public void UpdateSkill(SkillVM oldSkill,SkillVM skillVM)
+    public void UpdateSkill(SkillVM oldSkill,SkillVM newSkill)
     {
-        var index = EditableChampionVM.Skills.IndexOf(oldSkill);
-        if(index != -1) EditableChampionVM.Skills[index] = skillVM;
+        EditableChampionVM.UpdateSkill(oldSkill, newSkill);
     }
 
 

@@ -6,59 +6,37 @@ using System.Runtime.CompilerServices;
 
 namespace Custom_Toolkit_MVVM;
 
-public class ReadOnlyObservableDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
+public class ReadOnlyObservableDictionary<TKey, TValue> : ReadOnlyDictionary<TKey, TValue>, INotifyPropertyChanged, INotifyCollectionChanged
     where TKey : notnull
 {
-    private readonly ObservableDictionary<TKey, TValue> dictionary;
 
-    public event PropertyChangedEventHandler? PropertyChanged
+    public event PropertyChangedEventHandler? PropertyChanged;
+    public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+    public ReadOnlyObservableDictionary(ObservableDictionary<TKey, TValue> dictionary) : base(dictionary)
     {
-        add => dictionary.PropertyChanged += value;
-        remove => dictionary.PropertyChanged -= value;
+        dictionary.CollectionChanged += HandleCollectionChanged;
+        dictionary.PropertyChanged += HandlePropertyChange;
     }
 
-    public event NotifyCollectionChangedEventHandler? CollectionChanged
+    protected virtual void HandlePropertyChange(object sender,PropertyChangedEventArgs args)
     {
-        add => dictionary.CollectionChanged += value;
-        remove => dictionary.CollectionChanged -= value;
+        OnPropertyChanged(args);
     }
 
-    public ReadOnlyObservableDictionary(ObservableDictionary<TKey, TValue> dictionary)
+    protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
     {
-        this.dictionary = dictionary;
+        PropertyChanged?.Invoke(this,args);
     }
 
-    public int Count => dictionary.Count;
-
-    public IEnumerable<TKey> Keys => dictionary.Keys;
-
-    public IEnumerable<TValue> Values => dictionary.Values;
-
-    public TValue this[TKey key] => dictionary[key];
-
-    public bool ContainsKey(TKey key)
+    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
     {
-        return dictionary.ContainsKey(key);
+        CollectionChanged?.Invoke(this, args);
     }
 
-    public bool TryGetValue(TKey key, out TValue value)
+    private void HandleCollectionChanged(object sender,NotifyCollectionChangedEventArgs eventArgs)
     {
-        return dictionary.TryGetValue(key, out value);
-    }
-
-    public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-    {
-        return dictionary.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return ((IEnumerable)dictionary).GetEnumerator();
-    }
-
-    public ObservableDictionary<TKey, TValue> ToObservableDictionary()
-    {
-        return new ObservableDictionary<TKey, TValue>(dictionary);
+        OnCollectionChanged(eventArgs);
     }
 
 }
