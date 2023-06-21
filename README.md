@@ -282,7 +282,7 @@ public class ModelVM : GenericClassVM<Model> {
 | Ajouter la gestion des skills | X | | | |
 | Ajouter la gestion des skins | | X (besoin de recharger la page pour affichage) | | |
 
-# Bugs connues
+# Bugs connus
 
 `IOS` : la classe actuelle du champion n'est pas sélectionnée lors de son édition
 
