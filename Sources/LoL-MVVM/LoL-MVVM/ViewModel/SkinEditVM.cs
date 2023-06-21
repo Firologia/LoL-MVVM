@@ -9,7 +9,7 @@ public class SkinEditVM
     private ApplicationVM applicationVM = (Application.Current as App)?.ApplicationVM;
     private ChampionVM championVM;
     private SkinVM skinVM;
-    public EditableSkinVM EditableSkinVM { get; set; } = new();
+    public EditableSkinVM EditableSkinVM { get; set; }
     
     public ICommand PickImageCommand { get; }
     public ICommand PickIconCommand { get; }
@@ -19,11 +19,7 @@ public class SkinEditVM
     public SkinEditVM(ChampionVM championVM)
     {
         this.championVM = championVM;
-        EditableSkinVM = new EditableSkinVM()
-        {
-            ChampionVM = championVM,
-
-        };
+        EditableSkinVM = new EditableSkinVM(championVM);
 
         SubmitCommand = new Command(SubmitCommandMethod);
         CancelCommand = new Command(CancelCommandMethod);
@@ -33,12 +29,7 @@ public class SkinEditVM
 
     public SkinEditVM(SkinVM skinVM) : this(skinVM.ChampionVM)
     {
-        this.skinVM = skinVM;
-        EditableSkinVM.Name = skinVM.Name;
-        EditableSkinVM.Description = skinVM.Description;
-        EditableSkinVM.Icon = skinVM.Icon;
-        EditableSkinVM.Image = skinVM.Image;
-        EditableSkinVM.Price = skinVM.Price;
+        EditableSkinVM = new EditableSkinVM(skinVM);
     }
 
     private async void PickIconCommandMethod()
@@ -72,7 +63,7 @@ public class SkinEditVM
     /// <param name="skinVM">Skin added</param>
     private void AddSkin(SkinVM skinVM)
     {
-        applicationVM.ChampionsManagerVM.AddSkin(skinVM);
+        applicationVM.SkinsManagerVM.AddSkin(skinVM);
     }
 
     /// <summary>
@@ -82,7 +73,7 @@ public class SkinEditVM
     /// <param name="newSkin">The new Skin</param>
     private void UpdateSkin(SkinVM oldSkin, SkinVM newSkin)
     {
-        applicationVM.ChampionsManagerVM.UpdateSkin(oldSkin, newSkin);
+        applicationVM.SkinsManagerVM.UpdateSkin(oldSkin, newSkin);
     }
     
     /// <summary>

@@ -8,6 +8,7 @@ namespace LoL_MVVM.ViewModel
 	public class ApplicationVM : CustomObservableObject
 	{
 		public ChampionsManagerVM ChampionsManagerVM { get; }
+		public SkinsManagerVM SkinsManagerVM { get; }
 
 		public static INavigation Navigation
 		{
@@ -26,9 +27,10 @@ namespace LoL_MVVM.ViewModel
 
 		public ICommand DeleteSkinCommand { get; }
 
-		public ApplicationVM(ChampionsManagerVM championsManagerVM)
+		public ApplicationVM(ChampionsManagerVM championsManagerVM, SkinsManagerVM skinsManagerVM)
 		{
 			//Set the championManagerVM
+			SkinsManagerVM = skinsManagerVM;
 			ChampionsManagerVM = championsManagerVM;
 			//Set the commands
 			ChampionDetailsCommand = new Command<ChampionVM>(GoToChampionDetailsPage);
@@ -90,7 +92,7 @@ namespace LoL_MVVM.ViewModel
 		private async void DeleteSkinCommandMethod(SkinVM skinVM)
 		{
 			if (skinVM == null) return;
-			await ChampionsManagerVM.DeleteSkin(skinVM);
+			await SkinsManagerVM.DeleteSkin(skinVM);
 		}
     }
 }

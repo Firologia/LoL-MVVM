@@ -23,6 +23,8 @@ public static class SkillTypeMapper
     {
         switch (skillTypeVM)
         {
+            case SkillTypeVM.Unknown:
+                return SkillType.Unknown;
             case SkillTypeVM.Basic:
                 return SkillType.Basic;
             case SkillTypeVM.Passive:

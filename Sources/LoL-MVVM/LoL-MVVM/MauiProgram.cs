@@ -23,6 +23,7 @@ public static class MauiProgram
 			})
 			.Services.AddSingleton<IDataManager, StubData>()
 			.AddSingleton<ChampionsManagerVM>()
+			.AddSingleton<SkinsManagerVM>()
             .AddSingleton<ApplicationVM>()
 			.AddSingleton<App>();
 

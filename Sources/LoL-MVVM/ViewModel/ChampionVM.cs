@@ -111,5 +111,21 @@ namespace ViewModel
             var result =model.AddSkill(skill.Model);
             if(result) skills.Add(skill);
         }
+
+        public void RemoveSkin(SkinVM skinVM)
+        {
+            skins.Remove(skinVM);
+        }
+
+        public void UpdateSkin(SkinVM oldSkin, SkinVM skinVM)
+        {
+            var index = skins.IndexOf(oldSkin);
+            if(index != -1) skins[index] = skinVM;
+        }
+
+        public void AddSkin(SkinVM skinVM)
+        {
+            skins.Add(skinVM);
+        }
     }
 }
