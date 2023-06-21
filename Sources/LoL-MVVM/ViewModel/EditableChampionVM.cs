@@ -43,7 +43,7 @@ public class EditableChampionVM : CustomObservableObject
     }
     private string largeImage = "";
 
-    public ReadOnlyDictionary<string, int> Characteristics { get; }
+    public ReadOnlyObservableDictionary<string, int> Characteristics { get; }
     private readonly ObservableDictionary<string, int> characteristics  = new();
     
     public ReadOnlyObservableCollection<SkillVM> Skills { get; }
@@ -57,7 +57,8 @@ public class EditableChampionVM : CustomObservableObject
         ChampionClass = championVM.Class;
         Icon = championVM.Icon;
         LargeImage = championVM.LargeImage;
-        Characteristics = new ReadOnlyDictionary<string, int>(characteristics);
+        
+        Characteristics = new ReadOnlyObservableDictionary<string, int>(characteristics);
         Skills = new ReadOnlyObservableCollection<SkillVM>(skills);
         
         

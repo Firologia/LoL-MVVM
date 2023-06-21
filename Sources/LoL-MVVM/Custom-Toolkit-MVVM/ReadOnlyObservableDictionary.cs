@@ -16,7 +16,12 @@ public sealed class ReadOnlyObservableDictionary<TKey, TValue> : ReadOnlyDiction
         add => dictionary.PropertyChanged += value;
         remove => dictionary.PropertyChanged -= value;
     }
-    public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+    public event NotifyCollectionChangedEventHandler? CollectionChanged
+    {
+        add => dictionary.CollectionChanged += value;
+        remove => dictionary.CollectionChanged += value;
+    }
 
     public ReadOnlyObservableDictionary(ObservableDictionary<TKey, TValue> dictionary) : base(dictionary)
     {

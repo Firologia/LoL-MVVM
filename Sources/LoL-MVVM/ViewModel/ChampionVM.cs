@@ -54,6 +54,7 @@ namespace ViewModel
 
         public ChampionVM(Champion model) : base(model)
         {
+            Characteristics = new(characteristics);
             Skills = new(skills);
             Skins = new(skins);
 
@@ -61,15 +62,11 @@ namespace ViewModel
             {
                 characteristics.Add(characteristic.Key, characteristic.Value);
             }
-            
-            Characteristics = new(characteristics);
 
             foreach (var skill in model.Skills)
             {
                 skills.Add(new SkillVM(skill));
             }
-
-            
 
             foreach (var skin in model.Skins)
             {

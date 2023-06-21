@@ -49,7 +49,7 @@
                     </Border>
 
                     <Label  Text="Bio :"  Grid.Column="0" Grid.Row="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-                    <edition:TextAreaView Grid.Row="3" Grid.Column="1" TextValue="{Binding EditableChampionVM.Bio, Mode=TwoWay}" />
+                    <edition:TextAreaView Grid.Row="3" Grid.Column="1" WidthRequest="300" TextValue="{Binding EditableChampionVM.Bio, Mode=TwoWay}" />
 
                     <Label Text="Classe :"  Grid.Column="0" Grid.Row="4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 
@@ -95,7 +95,9 @@
                 
                     <Border Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent">
 
-                        <ListView SeparatorVisibility="None" HorizontalOptions="Start" RowHeight="50" WidthRequest="300" ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
+                        <ListView SeparatorVisibility="None " Margin="10" 
+                                  HeightRequest="200" HorizontalOptions="Start" SelectionMode="None"
+                                  RowHeight="50" WidthRequest="300" ItemsSource="{Binding EditableChampionVM.Characteristics}" >
                             <ListView.ItemTemplate >
                                 <DataTemplate >
                                     <ViewCell>
