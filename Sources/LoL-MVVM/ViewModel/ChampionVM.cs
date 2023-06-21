@@ -2,18 +2,20 @@
 using Custom_Toolkit_MVVM;
 using Model;
 using ViewModel.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ViewModel
 {
-    public class ChampionVM : GenericClassVM<Champion>
+    public class ChampionVM : ObservableObject
     {
 
+        private readonly Champion model;
         internal Champion Model => model;
         public string Name => model.Name;
         public string Bio 
         {
             get => model.Bio ;
-            set => SetModelPropertyChanged(model.Bio, value, EqualityComparer<string>.Default, model,
+            set => SetProperty(model.Bio, value, EqualityComparer<string>.Default, model,
                 (model, value) => { model.Bio = value!; });
 
         }
@@ -21,7 +23,7 @@ namespace ViewModel
         public ChampionClassVM Class
         {
             get => (ChampionClassVM) Enum.Parse<ChampionClassVM>(model.Class.ToString());
-            set => SetModelPropertyChanged(model.Class, value.ToModel(), EqualityComparer<ChampionClass>.Default, model,
+            set => SetProperty(model.Class, value.ToModel(), EqualityComparer<ChampionClass>.Default, model,
                     (model, value) =>
                     {
                         model.Class = value;
@@ -31,14 +33,14 @@ namespace ViewModel
         public string Icon
         {
             get => model.Icon;
-            set => SetModelPropertyChanged(model.Icon, value, EqualityComparer<string>.Default, model,
+            set => SetProperty(model.Icon, value, EqualityComparer<string>.Default, model,
                     (model, value) => { model.Icon = value; });
         }
 
         public string LargeImage
         {
             get => model.Image.Base64;
-            set => SetModelPropertyChanged(model.Image.Base64, value, EqualityComparer<string>.Default, model,
+            set => SetProperty(model.Image.Base64, value, EqualityComparer<string>.Default, model,
                 (model, value) => { model.Image.Base64 = value!; });
 
         }
@@ -52,8 +54,10 @@ namespace ViewModel
         public ReadOnlyObservableCollection<SkinVM> Skins { get; private init; }
         private ObservableCollection<SkinVM> skins = new();
 
-        public ChampionVM(Champion model) : base(model)
+        public ChampionVM(Champion model)
         {
+            this.model = model;
+            
             characteristics = new ObservableDictionary<string, int>(model.Characteristics);
             Characteristics = new(characteristics);
 
@@ -64,8 +68,9 @@ namespace ViewModel
             Skins = new(skins);
         }
 
-        public ChampionVM() : base(new Champion("", ChampionClass.Unknown))
+        public ChampionVM()
         {
+            model = new Champion("", ChampionClass.Unknown);
             Characteristics = new(characteristics);
             Skills = new(skills);
             Skins = new(skins);

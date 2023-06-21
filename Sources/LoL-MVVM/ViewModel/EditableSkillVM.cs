@@ -1,11 +1,17 @@
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using ViewModel.Enums;
 
 namespace ViewModel;
 
-public class EditableSkillVM
+public partial class EditableSkillVM : ObservableObject
 {
-    public string Name { get; set; }
-    public SkillTypeVM Type { get; set; }
-    public string Description { get; set; }
+    [ObservableProperty]
+    private string _name = "";
+
+    [ObservableProperty]
+    private SkillTypeVM _type;
+
+    [ObservableProperty]
+    private string _description = "";
 }

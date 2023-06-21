@@ -48,14 +48,25 @@ public class ChampionsManagerVM : INotifyPropertyChanged
             (PreviousPageCommand as Command).ChangeCanExecute();
         }
     }
+
+    #region Commands
+
+    // Go to next page of champions command
     public ICommand NextPageCommand {  get; private set; }
+    
+    //Go to previous page of champions command
     public ICommand PreviousPageCommand { get; private set; }
+    
+    //Load champions command
     public ICommand LoadCommand { get; private set; }
+
+    #endregion
+
     
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
 
-    public readonly IDataManager dataManager;
+    private readonly IDataManager dataManager;
 
     public ChampionsManagerVM(IDataManager dataManager)
     {
