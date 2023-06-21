@@ -95,16 +95,18 @@
                 
                     <Border Grid.Row="5" Grid.Column="1" BackgroundColor="Transparent">
 
-                        <CollectionView HeightRequest="200" ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
-                            <CollectionView.ItemTemplate >
+                        <ListView RowHeight="50" ItemsSource="{Binding EditableChampionVM.Characteristics}" Margin="10" >
+                            <ListView.ItemTemplate >
                                 <DataTemplate >
-
-                                    <edition:CaracteristicEditItemView Name="{Binding Key, Mode=TwoWay}" Value="{Binding Value, Mode=TwoWay}" />
+                                    <ViewCell>
+                                        <edition:CaracteristicEditItemView Name="{Binding Key, Mode=TwoWay}" Value="{Binding Value, Mode=TwoWay}" />
+                                    </ViewCell>
+                                    
 
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
+                            </ListView.ItemTemplate>
 
-                        </CollectionView>
+                        </ListView>
 
                     </Border>
 
