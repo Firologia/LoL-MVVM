@@ -1,20 +1,17 @@
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LoL_MVVM.Utils;
 using ViewModel;
 
 namespace LoL_MVVM.ViewModel;
 
-public class SkinEditVM
+public partial class SkinEditVM : ObservableObject
 {
     private ApplicationVM applicationVM = (Application.Current as App)?.ApplicationVM;
     private ChampionVM championVM;
     private SkinVM skinVM;
     public EditableSkinVM EditableSkinVM { get; set; } = new();
-    
-    public ICommand PickImageCommand { get; }
-    public ICommand PickIconCommand { get; }
-    public ICommand SubmitCommand { get; }
-    public ICommand CancelCommand { get; }
 
     public SkinEditVM(ChampionVM championVM)
     {
@@ -24,11 +21,6 @@ public class SkinEditVM
             ChampionVM = championVM,
 
         };
-
-        SubmitCommand = new Command(SubmitCommandMethod);
-        CancelCommand = new Command(CancelCommandMethod);
-        PickIconCommand = new Command(PickIconCommandMethod);
-        PickImageCommand = new Command(PickImageCommandMethod);
     }
 
     public SkinEditVM(SkinVM skinVM) : this(skinVM.ChampionVM)
@@ -41,23 +33,32 @@ public class SkinEditVM
         EditableSkinVM.Price = skinVM.Price;
     }
 
-    private async void PickIconCommandMethod()
+    #region Commands
+
+    [RelayCommand]
+    private async Task PickIcon()
     {
         var icon = await EditFilePicker.PickImage();
         if (icon is not null) EditableSkinVM.Icon = icon;
     }
-
-    private async void PickImageCommandMethod()
+    
+    [RelayCommand]
+    private async Task PickImage()
     {
         var image = await EditFilePicker.PickImage();
         if (image is not null) EditableSkinVM.Icon = image;
     }
 
+    #endregion
+
+
+
+
     /// <summary>
     /// This submit command call AddSkin or UpdateSkin depending on the skinVM
     /// </summary>
-    /// <param name="execute"></param>
-    private void SubmitCommandMethod(object execute)
+    [RelayCommand]
+    private void Submit()
     {
         var editedSkin = new SkinVM(EditableSkinVM);
         if(skinVM == null) AddSkin(editedSkin);
@@ -88,8 +89,8 @@ public class SkinEditVM
     /// <summary>
     /// When we push the cancel button, we close the edition
     /// </summary>
-    /// <param name="execute"></param>
-    private void CancelCommandMethod(object execute)
+    [RelayCommand]
+    private void Cancel()
     {
         CloseEdition();
     }

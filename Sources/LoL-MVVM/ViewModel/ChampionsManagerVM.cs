@@ -1,102 +1,64 @@
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Model;
 
 namespace ViewModel;
 
-public class ChampionsManagerVM : INotifyPropertyChanged
+public partial class ChampionsManagerVM : ObservableObject
 {
-    private int page = 1;
-    private int totalItems = 0;
-    private int totalPages;
-    private int pageSize = 5;
-
-    public int PageSize
-    {
-        get => pageSize;
-        set
-        {
-            if (value < 0) return;
-            pageSize = value;
-            OnPropertyChanged();
-        } 
-    }
-    
-    public int TotalPages
-    {
-        get => totalPages;
-        set
-        {
-            if (value < 0) return;
-            totalPages = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public int Page
-    {
-        get => page;
-        set
-        {
-            if (value < 1) return;
-            page = value;
-            OnPropertyChanged();
-            (NextPageCommand as Command).ChangeCanExecute();
-            (PreviousPageCommand as Command).ChangeCanExecute();
-        }
-    }
-
-    #region Commands
-
-    // Go to next page of champions command
-    public ICommand NextPageCommand {  get; private set; }
-    
-    //Go to previous page of champions command
-    public ICommand PreviousPageCommand { get; private set; }
-    
-    //Load champions command
-    public ICommand LoadCommand { get; private set; }
-
-    #endregion
-
     
     public ReadOnlyObservableCollection<ChampionVM> Champions { get; }
     private readonly ObservableCollection<ChampionVM> champions = new();
+    
+    #region Fields
 
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(PreviousPageCommand))]
+    [NotifyCanExecuteChangedFor(nameof(NextPageCommand))]
+    private int page = 1;
+    
+
+    public int TotalPages
+    {
+        get {
+        var totalItems = dataManager.ChampionsMgr.GetNbItems().Result;
+        return (int) Math.Ceiling((double) totalItems / pageSize);
+        }
+
+    }
+
+    [ObservableProperty]
+    private int pageSize = 5;
+    
+        
+    #endregion
+    
     private readonly IDataManager dataManager;
 
     public ChampionsManagerVM(IDataManager dataManager)
     {
         this.dataManager = dataManager;
         Champions = new ReadOnlyObservableCollection<ChampionVM>(champions);
-        UpdatePagination();
-        
-        #pragma warning disable CA1416
-        
-        LoadCommand = new Command(LoadChampions);
-
-        NextPageCommand = new Command(
-            execute: () =>
-            {
-                Page++;
-                LoadChampions();
-            },
-            canExecute: () => Page < TotalPages);
-        
-        PreviousPageCommand = new Command(
-            execute: () =>
-            {
-                Page--;
-                LoadChampions();
-            },
-            canExecute: () => Page > 1);
-        
-        #pragma warning restore CA1416
-
     }
+
+    #region Commands
+
+    [RelayCommand(CanExecute = nameof(CanNextPage))]
+    private void NextPage()
+    {
+        Page++;
+        LoadChampions();
+    }
+    
+    [RelayCommand(CanExecute = nameof(CanPreviousPage))]
+    private void PreviousPage()
+    {
+        Page--;
+        LoadChampions();
+    }
+    
+    [RelayCommand]
     private void LoadChampions()
     {
         champions.Clear();
@@ -105,43 +67,48 @@ public class ChampionsManagerVM : INotifyPropertyChanged
             champions.Add(new ChampionVM(champion!));
         }
     }
+
+    #endregion
     
-    private void UpdatePagination() {
-        totalItems = dataManager.ChampionsMgr.GetNbItems().Result;
-        TotalPages = (int) Math.Ceiling((double) totalItems / pageSize);
-    }
+    #region CanExecute
 
-    public void DeleteChampion(ChampionVM championVM)
+    private bool CanNextPage() => Page < TotalPages;
+    private bool CanPreviousPage() => Page > 1;
+
+    #endregion
+
+    #region ManageChampions
+    
+    public async Task DeleteChampion(ChampionVM championVM)
     {
-        dataManager.ChampionsMgr.DeleteItem(championVM.Model);
+        var result = await dataManager.ChampionsMgr.DeleteItem(championVM.Model);
+        if (!result) return;
+        
+        OnPropertyChanged(nameof(TotalPages));
+        NextPageCommand.NotifyCanExecuteChanged();
+        
         LoadChampions();
-        UpdatePagination();
-        //Refresh next page
-        (NextPageCommand as Command).ChangeCanExecute();
-    }
 
-    public void AddChampion(ChampionVM championVM)
+        //Refresh next page
+
+    }
+    
+    public async Task AddChampion(ChampionVM championVM)
     {
-        dataManager.ChampionsMgr.AddItem(championVM.Model);
+        var result = await dataManager.ChampionsMgr.AddItem(championVM.Model);
+        if (result == null) return;
         //Update the pagination
-        UpdatePagination();
+        OnPropertyChanged(nameof(TotalPages));
+        NextPageCommand.NotifyCanExecuteChanged();
         //Load the champions
         LoadChampions();
-        //Refresh next page
-        (NextPageCommand as Command).ChangeCanExecute();
     }
-
+    
     public ChampionVM CreateChampion(string name)
     {
         return new ChampionVM(new Champion(name, ChampionClass.Assassin));
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+    #endregion
 
     public void AddSkin(SkinVM skinVM)
     {

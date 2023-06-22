@@ -1,47 +1,29 @@
 using System.Collections.ObjectModel;
 using System.Reflection.PortableExecutable;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Custom_Toolkit_MVVM;
 using ViewModel.Enums;
 using ViewModel.Utils;
 
 namespace ViewModel;
 
-public class EditableChampionVM : CustomObservableObject
+public partial class EditableChampionVM : ObservableObject
 {
-    public string Name
-    {
-        get => name;
-        set => SetPropertyChanged(ref name, value, EqualityComparer<string>.Default);
-    }
+
+    [ObservableProperty]
     private string name = "";
-
-    public string Bio
-    {
-        get => bio;
-        set => SetPropertyChanged(ref bio, value, EqualityComparer<string>.Default);
-    }
+    
+    [ObservableProperty]
     private string bio = "";
-
-    public ChampionClassVM ChampionClass
-    {
-        get => championClass;
-        set => SetPropertyChanged(ref championClass, value, EqualityComparer<ChampionClassVM>.Default);
-    }
+    
+    [ObservableProperty]
     private ChampionClassVM championClass;
     
-    public string Icon
-    {
-        get => icon;
-        set => SetPropertyChanged(ref icon, value, EqualityComparer<string>.Default);
-    }
-    private string icon = "";
+    [ObservableProperty]
+    private string icon = Base64Constants.DEFAULT_ICON;
     
-    public string LargeImage
-    {
-        get => largeImage;
-        set => SetPropertyChanged(ref largeImage, value, EqualityComparer<string>.Default);
-    }
-    private string largeImage = "";
+    [ObservableProperty]
+    private string largeImage = Base64Constants.DEFAULT_IMAGE;
 
     public ReadOnlyObservableDictionary<string, int> Characteristics { get; }
     private readonly ObservableDictionary<string, int> characteristics  = new();

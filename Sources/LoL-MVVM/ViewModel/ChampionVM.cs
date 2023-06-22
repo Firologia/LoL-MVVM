@@ -22,7 +22,7 @@ namespace ViewModel
 
         public ChampionClassVM Class
         {
-            get => (ChampionClassVM) Enum.Parse<ChampionClassVM>(model.Class.ToString());
+            get => model.Class.ToViewModel();
             set => SetProperty(model.Class, value.ToModel(), EqualityComparer<ChampionClass>.Default, model,
                     (model, value) =>
                     {

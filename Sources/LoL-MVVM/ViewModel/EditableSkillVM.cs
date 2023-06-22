@@ -10,7 +10,7 @@ public partial class EditableSkillVM : ObservableObject
     private string _name = "";
 
     [ObservableProperty]
-    private SkillTypeVM _type;
+    private SkillTypeVM _type = SkillTypeVM.Unknown;
 
     [ObservableProperty]
     private string _description = "";

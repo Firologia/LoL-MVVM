@@ -17,11 +17,11 @@
     
     <ContentPage.Behaviors>
         <!-- Call the load command at the end of loading of this page -->
-        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding ChampionsManagerVM.LoadCommand}"/>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding ChampionsManagerVM.LoadChampionsCommand}"/>
     </ContentPage.Behaviors>
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Ajouter" Command="{Binding CreateCommand}" />
+        <ToolbarItem Text="Ajouter" Command="{Binding CreateChampionCommand}" />
     </ContentPage.ToolbarItems>
 
     <VerticalStackLayout>
@@ -38,8 +38,8 @@
                     <ViewCell>
                         <SwipeView>
                             <SwipeView.RightItems>
-                                <SwipeItem Text="Delete" BackgroundColor="Red" CommandParameter="{Binding }" Command="{Binding ApplicationVM.DeleteCommand , Source={x:Reference ListPage}}"/>
-                                <SwipeItem Text="Modifier" CommandParameter="{Binding}" Command="{Binding ApplicationVM.EditCommand, Source={x:Reference ListPage}}" BackgroundColor="{StaticResource Gray400}"/>
+                                <SwipeItem Text="Delete" BackgroundColor="Red" CommandParameter="{Binding }" Command="{Binding ApplicationVM.DeleteChampionCommand , Source={x:Reference ListPage}}"/>
+                                <SwipeItem Text="Modifier" CommandParameter="{Binding}" Command="{Binding ApplicationVM.ChampionEditCommand, Source={x:Reference ListPage}}" BackgroundColor="{StaticResource Gray400}"/>
                             </SwipeView.RightItems>
                             <components:ChampionItemView/>
                         </SwipeView>
