@@ -4,7 +4,12 @@
     - [Description](#description)
     - [Avantages du MVVM](#avantages-du-mvvm)
     - [Schéma du MVVM (en .NET MAUI)](#schéma-du-mvvm-en-net-maui)
-2. [Community Toolkit](#mvvm-maison-custom-toolkit)
+2. [Community Toolkit](#community-toolkit)
+    - [Observable Object](#observable-object)
+    - [ObservableProperty](#observableproperty)
+    - [Relay Command](#relay-command)
+    - [NotifyCanExecuteChangedFor](#notifycanexecutechangedfor)
+3. [Fontionnalités](#fontionnalités)
 # Qu'est ce que MVVM ?
 
 MVVM est un pattern d'architecture logicielle couramment utilisé dans le développement d'applications à interface utilisateur (UI).
