@@ -9,4 +9,7 @@ Cette application a été réalisé avec 2 versions différentes du MVVM :
     Cette version est disponible sur la branche `custom-toolkit`.
     Elle utilise un toolkit MVVM maison qui permet de bien comprendre l'architecture MVVM ainsi que tout les concepts.
 
-- [**MVVM Community Toolkit**]()
+- [**MVVM Community Toolkit**](https://codefirst.iut.uca.fr/git/jordan.artzet/LoL-MVVM/src/branch/community-toolkit)
+
+    Cette version est disponible sur la branche `community-toolkit`.
+    Elle utilise le Community Toolkit qui permet simplifier l'utilisation de l'architecture MVVM dans le projet.
