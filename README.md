@@ -4,12 +4,7 @@
     - [Description](#description)
     - [Avantages du MVVM](#avantages-du-mvvm)
     - [Schéma du MVVM (en .NET MAUI)](#schéma-du-mvvm-en-net-maui)
-2. [Mon MVVM (Custom Toolkit)](#mvvm-maison-custom-toolkit)
-    - [Description](#description-1)
-    - [Schéma](#schéma)
-    - [Code](#code)
-    - [Exemple](#exemple)
-
+2. [Community Toolkit](#mvvm-maison-custom-toolkit)
 # Qu'est ce que MVVM ?
 
 MVVM est un pattern d'architecture logicielle couramment utilisé dans le développement d'applications à interface utilisateur (UI).
@@ -79,188 +74,194 @@ ViewModel ..> PropertyChangedEventArgs
 - L'interface `INotifyPropertyChanged` définit l'événement `PropertyChanged` qui est utilisé pour notifier les changements de propriétés du `ViewModel`.
 - La classe `PropertyChangedEventArgs` encapsule les informations sur le changement de propriété, tel que le nom de la propriété modifiée.
 
-# MVVM maison (Custom Toolkit)
+# Community Toolkit
 
-## Description
+Le Community utilise les composants suivant :
+- `Observable Object`, une classe de base
+- `ObservableProperty`, une annotation permettant de la génération de code
+- `Relay Command`, une annotation permettant de génerer automatiquement une commande
+- `NotifyCanExecuteChangedFor`, une méthode permettant de rafraichir la méthode CanExecute d'une commande
 
-Le but de ce toolkit personnalisé est de simplifier la création de ViewModel des classes du modèle.
+## Observable Object
 
+La classe `ObservableObject` est une classe de base qui permet d'observer les changements des objets en implémentant les interfaces `INotifyPropertyChanged` et `INotifyPropertyChanging`. Elle est utilisée comme point de départ pour tous les types d'objets qui doivent prendre en charge les notifications de changement de propriété.
 
-## Schéma
+La classe fournit une série de méthodes `SetProperty` qui facilitent la définition des valeurs des propriétés pour les types dérivés de `ObservableObject` et déclenchent automatiquement les événements appropriés.
 
-```plantuml
-
-@startuml
-
-class CustomObservableObject {
-    +PropertyChanged: event PropertyChangedEventHandler?
-    #SetPropertyChanged<T>(inout oldValue: T, newValue: T, comparer: IEqualityComparer<T>, propertyName: string = ""): void
-    #SetModelPropertyChanged<TModel, T>(oldValue: T, newValue: T, comparer: IEqualityComparer<T>, model: TModel, callback: Action<TModel, T>, propertyName: string? = null): bool
-    #OnPropertyChanged(propertyName: string? = null): void
-}
-
-class GenericClassVM<T> extends CustomObservableObject {
-    +PropertyChanged: event PropertyChangedEventHandler?
-    -model: T
-
-    +GenericClassVM(model: T)
-
-}
-
-class ModelVM extends GenericClassVM {
-
-}
-@enduml
-
-```
-
-`CustomObservableObject` est la classe qui est la base de mon toolkit, elle implémente l'interface `INotifyPropertyChanged` et a 2 méthode différentes : 
-- `SetPropertyChanged` permettant de modifier une propriété passé par référence dans la méthode
-- `SetModelPropertyChanged` permettant de modifier une propriété du modèle
-
-`GenericClassVM` est une classe qui hérite de `CustomObservableObject` par ce biais elle implémente `INotifyPropertyChanged` et peux utiliser les 2 méthodes de `CustomObservableObject`. Lorqu'elle est instanciée 
-
-`ModelVM` représente une classe du ViewModel qui wrappe une classe de notre modèle elle hérite de `GenericClassVM<T>` avec T la classe du modèle
-
-## Code
-
-### CustomObservableObject
+Elle expose également les méthodes `OnPropertyChanged` et `OnPropertyChanging`, qui peuvent être personnalisées dans les types dérivés pour modifier la façon dont les événements de notification sont déclenchés.
 
 ```csharp
 
-	public abstract class CustomObservableObject : INotifyPropertyChanged
-	{
-        public event PropertyChangedEventHandler? PropertyChanged;
+public class ExempleVM : ObservableObject
+{
+    private Exemple model;
 
-        /// <summary>
-        /// Set property changed for a property
-        /// </summary>
-        /// <param name="oldValue">Base value</param>
-        /// <param name="newValue">Value to set</param>
-        /// <param name="comparer">The comparer use to compare value</param>
-        /// <param name="propertyName">The name of the property</param>
-        /// <typeparam name="T">Type of the property</typeparam>        
-        protected void SetPropertyChanged<T>([NotNullIfNotNull(nameof(newValue))] ref T oldValue, T newValue, IEqualityComparer<T> comparer , [CallerMemberName] string propertyName = "")
-        {
-            if (comparer.Equals(oldValue, newValue))
-                return;
-
-            oldValue = newValue;
-            OnPropertyChanged(propertyName);
-
-        }
-
-        /// <summary>
-        /// Set property changed for a property of an object (model)
-        /// </summary>
-        /// <typeparam name="TModel">Object (Model) type</typeparam>
-        /// <typeparam name="T">Property type</typeparam>
-        /// <param name="oldValue">Base value</param>
-        /// <param name="newValue">Value to set</param>
-        /// <param name="comparer">The comparer used to compare the values</param>
-        /// <param name="model">The object (model) which contains the property</param>
-        /// <param name="callback">The callback we use to assign the value to the property in the model</param>
-        /// <param name="propertyName">The name of the property</param>
-        /// <returns></returns>
-        protected bool SetModelPropertyChanged<TModel, T>(T oldValue, T newValue, IEqualityComparer<T> comparer, TModel model, Action<TModel, T> callback, [CallerMemberName] string? propertyName = null)
-                where TModel : class
-        {
-            ArgumentNullException.ThrowIfNull(comparer);
-            ArgumentNullException.ThrowIfNull(model);
-            ArgumentNullException.ThrowIfNull(callback);
-
-            if (comparer.Equals(oldValue, newValue)) return false;
-
-            callback(model, newValue);
-
-            OnPropertyChanged(propertyName);
-
-            return true;
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-    }
-
-
-```
-
-### GenericClassVM
-
-```csharp
-
-	public class GenericClassVM<T> : CustomObservableObject
-	{
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected T model;
-
-		protected GenericClassVM(T model)
-		{
-			this.model = model;
-		}
-
-	}
-```
-
-## Exemple
-
-### Sans le MVVM maison
----
-Pour configurer une propriété de notre ViewModel pour qu'elle notifie la vue d'un changement dans le modèle, il faut configurer chacun des champs (ayant un type primitif) que l'on souhaite modifiable de notre modèle et implémenter INotifyPropertyChanged dans notre classe pour qu'elle soit capable de notifier la vue d'un changement de notre modèle
-
-```csharp
-
-public class ModelVM : INotifyPropertyChanged {
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    public string Champ
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    private Model model;
-
-    public string Description {
-        get => model.Description;
-        set 
-        {
-            if(model.Description.Equals(value)) 
-                return;
-            model.Description = value;
-            NotifyPropertyChanged();
-
-        }
+        get => model.Champ;
+        set => SetProperty(model.Champ, value, model, (model, value) => model.Champ = value);
     }
 }
 
 ```
 
-### Avec le MVVM maison
-___
+## ObservableProperty
 
-Notre classe `ModelVM` hérite de GenericClassVM\<Model> donc de `CustomObservableObject` et implémente donc `INotifyPropertyChanged`. Nous n'avons donc plus besoin d'implémenter le système de notifications comme au dessus. Nous pouvons nous contenter d'appeler la méthode `SetModelPropertyChanged` pour wrapper une propriété du modèle.
+L'annotation `ObservableProperty` permet de générer automatiquement la propriété sous-jacente correspondante à l'attribut. Pour définir une propriété observable, il faut déclarer un attribut privé avec l'annotation `ObservableProperty`. Cela permet de simplifier la création et la gestion des propriétés observables en générant le code nécessaire à leur implémentation.
 
+> ⚠️ Pour utiliser l'annotation `ObservableProperty`, il est nécessaire que la classe soit déclarée comme partielle, afin que le Toolkit puisse générer les propriétés dans une autre classe partielle portant le même nom.
+
+### **Sans Community Toolkit**
 ```csharp
 
-public class ModelVM : GenericClassVM<Model> {
+public class ClassVM : ObservableObject
+{
+    public int Exemple
+    {
+        get => exemple;
+        set => SetProperty(ref exemple, value);
+    }
 
-    public string Description {
-        get => model.Description;
-        set => SetModelPropertyChanged(
-            model.Description,                 //Champ du modèle que l'on souhaite modifier
-            value,                             //Valeur avec laquelle on veut modifier le champ
-            EqualityComparer<string>.Default,  //Le comparer qui sera utilisé pour comparer nos valeurs
-            model,                             //Notre modèle wrappé
-            (model, value) => { model.Description = value; }    //La callback que l'on appellera si jamais les 2 valeurs ne sont pas égales
+    private int exemple;
+}
+```
+### **Avec Community Toolkit**
+```csharp
+
+public partial class ClassVM : ObservableObject
+{
+    [ObservableProperty]
+    private int exemple;
+
+}
+
+```
+
+## Relay Command
+
+L'annotation `RelayCommand` permet de générer automatiquement la commande correspondant à une méthode annotée. Pour définir une commande, il suffit d'ajouter l'annotation `RelayCommand` à une méthode de la classe. Cela permet de simplifier la création et la gestion des commandes en générant automatiquement le code nécessaire à leur implémentation.
+
+> ⚠️ Pour utiliser l'annotation `RelayCommand`, il est nécessaire que la classe soit déclarée comme partielle, afin que le Toolkit puisse générer la commande dans une autre classe partielle portant le même nom.
+
+### **Sans Community Toolkit**
+```csharp
+
+public class ExempleVM
+{
+    public ICommand ExempleMethodCommand { get; }
+
+    public ExempleVM()
+    {
+        ExempleMethodCommand = new Command(execute: ExempleMethod);
+    }
+
+    private async void ExempleMethod()
+    {
+        //Some code
+    }
+}
+
+```
+### **Avec Community Toolkit**
+```csharp
+
+public partial class ExempleVM : ObservableObject
+{
+
+    public ExempleVM()
+    {
+    }
+
+    [RelayCommand]
+    private async void ExempleMethod()
+    {
+        //Some code
+    }
+}
+
+```
+
+## NotifyCanExecuteChangedFor
+
+ Cet appel à la méthode `NotifyCanExecuteChanged()` permet de rafraîchir la méthode `CanExecute()` de la commande, ce qui permet d'obtenir l'état mis à jour du `CanExecute()`. En d'autres termes, cela permet de signaler à la commande qu'un changement s'est produit dans une propriété associée, ce qui peut influencer l'état d'exécution de la commande.
+
+### **Sans Community Toolkit**
+```csharp
+
+public class ExempleVM
+{
+    
+    private int index;
+
+    public ICommand ExempleMethodCommand { get; }
+
+    public ExempleVM()
+    {
+        ExempleMethodCommand = new Command(
+            execute: ExempleMethod,
+            canExecute: () => page > 0
             );
     }
+
+    private async void ExempleMethod()
+    {
+        //Code sucspetible de rendre la commande non executable
+        index--;
+        (ExempleMethodCommand as Command)?.ChangeCanExecute();
+    }
+
+
 }
 
 ```
+### **Avec Community Toolkit**
+```csharp
+
+public partial class ExempleVM : ObservableObject
+{
+    private int index;
+
+    public ExempleVM()
+    {
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExempleMethod))]
+    private async void ExempleMethod()
+    {
+        //Code sucspetible de rendre la commande non executable
+        index--;
+        ExempleMethodCommand.NotifyCanExecuteChanged();
+    }
+
+    private bool CanExempleMethod() => index > 0;
+}
+
+```
+
+# Fontionnalités
+
+
+
+| Intitulé | Fontionnelle | Partiellement fonctionnelle | Non Fonctionnelle | Non fait |
+| -------- | ------------ | --------------------------- | ----------------- | -------- |
+| Affichage collection champions | X | | | |
+| Pagination | X | | | |
+| Sélection d'un champion pour voir le détail | X | | | |
+| Gestion des caractéristiques | | X (pas de suppression) | | |
+| Gestion de la classe du champion | X | | | |
+| Modification d'un champion existant (depuis page champion et swipe de l'item) | X | | | |
+| Ajout d'un nouveau champion | X | | | |
+| Ajouter la gestion des skills | X | | | |
+| Ajouter la gestion des skins | | X (besoin de recharger la page pour affichage) | | |
+
+# Bugs connus
+
+`IOS` : la classe actuelle du champion n'est pas sélectionnée lors de son édition
+
+`Android` : les images de la liste ne corrrespondent pas forcément à celle du champion
+
+`Skins` bug lors de la modification d'un skin (il n'est pas supprimé).
+
+# Auteur
+
+- **Jordan Artzet**
