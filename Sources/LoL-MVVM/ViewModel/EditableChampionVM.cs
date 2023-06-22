@@ -75,4 +75,9 @@ public partial class EditableChampionVM : ObservableObject
         var index = skills.IndexOf(oldSkill);
         if(index != -1) skills[index] = newSkill;
     }
+
+    public void DeleteSkill(SkillVM skillVM)
+    {
+        skills.Remove(skillVM);
+    }
 }

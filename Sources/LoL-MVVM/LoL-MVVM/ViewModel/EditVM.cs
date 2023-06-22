@@ -63,6 +63,12 @@ public partial class EditVM : ObservableObject
     }
 
     [RelayCommand]
+    private void DeleteSkill(SkillVM skillVM)
+    {
+        EditableChampionVM.DeleteSkill(skillVM);
+    }
+
+    [RelayCommand]
     private void Submit()
     {
         {
